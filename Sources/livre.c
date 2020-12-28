@@ -51,6 +51,16 @@ void print_all(){
     fclose(pf);
 }
 
+int recherche(Livre lv){
+    Livre temp;
+    FILE *pf=fopen("livre.dat","rb");
+    if(!pf) exit(-1);
+    while (fread(&temp,sizeof(Livre),1,pf)==1){
+        if(temp.num_liv==lv.num_liv) return 1;
+    }
+    fclose(pf);
+    return 0;
+}
 
 void ajout_livre(){
     // mode ab pour ajouter a la fin du fichier binaire
@@ -61,7 +71,10 @@ void ajout_livre(){
     }
     //lecture
     Livre lv=scan_livre();
-    //ecriture
-    fwrite(&lv,sizeof(Livre),1,fin);
+    // recherche de doublon
+    if(!recherche(lv)){
+        //ecriture
+        fwrite(&lv,sizeof(Livre),1,fin);
+    }else printf("livre deja exist !\n");
     fclose(fin);
 }
