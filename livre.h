@@ -1,3 +1,6 @@
+#ifndef LIVRE_H_INCLUDED
+#define LIVRE_H_INCLUDED
+
 typedef struct _auteur{
     char nom_aut[100];
     char prenom_aut[100];
@@ -14,4 +17,11 @@ typedef struct _livre{
 
 Livre scan_livre();
 void ajout_livre();
+void rechercher_livre(char*);
+
 void print_all();
+int livre_exist(Livre);
+void print_livre(Livre);
+Livre scan_livre();
+
+#endif // LIVRE_H_INCLUDED

@@ -1,26 +1,28 @@
-#include <livre.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
+#include <gtk/gtk.h>
+#include "livre.h"
 
 Livre scan_livre(){
     Livre lv;
     printf("Numero: ");
-    scanf("%d%*c",&lv.num_liv); 
+    scanf("%d%*c",&lv.num_liv);
     // le %*c est pour ignorer le caractere espace ('\n') que scanf laisse
-    // pour que fgets ne le lit pas  
-    
+    // pour que fgets ne le lit pas
+
     printf("\nTitre: ");
     fgets(lv.titre_liv,sizeof(lv.titre_liv),stdin);
-    
+
     printf("\nCatalogue: ");
     fgets(lv.categ_liv,sizeof(lv.categ_liv),stdin);
-    
+
     printf("\nNom de l'auteur: ");
     fgets(lv.auteur_liv.nom_aut,sizeof(lv.auteur_liv.nom_aut),stdin);
-    
+
     printf("\nPrenom de l'auteur: ");
     fgets(lv.auteur_liv.prenom_aut,sizeof(lv.auteur_liv.nom_aut),stdin);
-    
+
     printf("\nNumero d'adherant ayant emprunte le livre: ");
     scanf("%d",&lv.emprunteur_liv);
 
@@ -28,18 +30,18 @@ Livre scan_livre(){
 }
 
 void print_livre(Livre lv){
-    printf("Numero: %d\n",lv.num_liv);
-    printf("Titre: %s\n",lv.titre_liv);
-    printf("Catalogue: %s\n",lv.categ_liv);
-    printf("Nom de l'auteur: %s\n",lv.auteur_liv.nom_aut);
-    printf("Prenom de l'auteur: %s\n",lv.auteur_liv.prenom_aut);
-    printf("Numero d'adherant ayant emprunte le livre: %d\n",lv.emprunteur_liv);
+    g_print("Numero: %d\n",lv.num_liv);
+    g_print("Titre: %s\n",lv.titre_liv);
+    g_print("Catalogue: %s\n",lv.categ_liv);
+    g_print("Nom de l'auteur: %s\n",lv.auteur_liv.nom_aut);
+    g_print("Prenom de l'auteur: %s\n",lv.auteur_liv.prenom_aut);
+    g_print("Numero d'adherant ayant emprunte le livre: %d\n",lv.emprunteur_liv);
 }
 
 void print_all(){
     FILE *pf=fopen("livre.dat","rb");
     if(!pf) {
-        printf("cannot open file \n");
+        pf=fopen("livre.dat","w+b");
         exit(-1);
     }
     Livre temp;
@@ -51,7 +53,7 @@ void print_all(){
     fclose(pf);
 }
 
-int recherche(Livre lv){
+int livre_exist(Livre lv){
     Livre temp;
     FILE *pf=fopen("livre.dat","rb");
     if(!pf) exit(-1);
@@ -64,17 +66,29 @@ int recherche(Livre lv){
 
 void ajout_livre(){
     // mode ab pour ajouter a la fin du fichier binaire
-    FILE *fin=fopen("livre.dat","ab");
+    FILE *fin=fopen("livre.bin","ab");
     if(!fin) {
         printf("cannot open file \n");
         exit(-1);
     }
     //lecture
     Livre lv=scan_livre();
-    // recherche de doublon
-    if(!recherche(lv)){
+    if(!livre_exist(lv)){
         //ecriture
         fwrite(&lv,sizeof(Livre),1,fin);
     }else printf("livre deja exist !\n");
     fclose(fin);
+}
+
+
+void rechercher_livre(char *titre){
+    FILE *fp=fopen("livre.dat","rb");
+    Livre temp;
+    while (fread(&temp,sizeof(Livre),1,fp)==1){
+        if(!strcmp(temp.titre_liv,titre)){
+            print_livre(temp);
+            return ;
+        }
+    }
+    g_print("no such autor\n");
 }
