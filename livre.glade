@@ -2,19 +2,7 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <object class="GtkWindow">
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkFixed">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-      </object>
-    </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
-  </object>
-  <object class="GtkWindow" id="b_window">
+  <object class="GtkWindow" id="info_window">
     <property name="name">Book's Information</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Book's Info</property>
@@ -32,6 +20,9 @@
             <property name="can_focus">False</property>
             <property name="margin_top">16</property>
             <property name="label" translatable="yes">ENTER BOOK'S INFORMATION</property>
+            <attributes>
+              <attribute name="font-desc" value="Ubuntu Light 14"/>
+            </attributes>
           </object>
           <packing>
             <property name="left_attach">0</property>
@@ -101,7 +92,7 @@
           <object class="GtkEntry" id="E3">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="margin_end">26</property>
+            <property name="margin_end">24</property>
           </object>
           <packing>
             <property name="left_attach">1</property>
@@ -200,29 +191,138 @@ Ayant emprunte le livre</property>
       <placeholder/>
     </child>
   </object>
-  <object class="GtkWindow" id="window">
-    <property name="name">ENSIAS BIBLIOTHEQUE</property>
+  <object class="GtkWindow" id="livre_window">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">ENSIAS BIBLIO</property>
-    <property name="default_width">800</property>
+    <property name="title" translatable="yes">ACCEUIL</property>
+    <property name="default_width">500</property>
     <property name="default_height">600</property>
     <child>
-      <object class="GtkFixed" id="grid">
+      <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">38</property>
         <child>
-          <object class="GtkButton" id="button">
-            <property name="label" translatable="yes">ADD BOOK</property>
-            <property name="width_request">100</property>
-            <property name="height_request">80</property>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">31</property>
+            <property name="label" translatable="yes">Gestion des Livres</property>
+            <property name="xalign">0.47999998927116394</property>
+            <attributes>
+              <attribute name="font-desc" value="Ubuntu Light 20"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_add_book">
+            <property name="label" translatable="yes">Ajouter</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
-            <signal name="clicked" handler="book_window()" swapped="no"/>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
           </object>
           <packing>
-            <property name="x">350</property>
-            <property name="y">250</property>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_edit_book">
+            <property name="label" translatable="yes">Modifier</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_delete_book">
+            <property name="label" translatable="yes">Supprimer</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_sort">
+            <property name="label" translatable="yes">Ordonne par Categorie</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_search_book">
+            <property name="label" translatable="yes">Rechercher</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_print_books">
+            <property name="label" translatable="yes">Afficher</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_return_to_menu">
+            <property name="label" translatable="yes">Menu Principale</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
+            <property name="margin_bottom">24</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">7</property>
           </packing>
         </child>
       </object>
