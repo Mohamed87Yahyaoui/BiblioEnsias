@@ -17,9 +17,6 @@ typedef struct _livre{
     int emprunteur_liv;
 }Livre;
 
-typedef struct multp{
-GtkWidget *one,*two,*three,*four,*five,*six;
-}multp;
 
 enum{
 NUM,
@@ -30,6 +27,9 @@ PRENOM,
 EMPR,
 COLUMNS
 };
+
+//static int num_books=0;
+
 
 GtkBuilder *b_builder;
 
@@ -59,7 +59,14 @@ GtkWidget *E3;
 GtkWidget *E4;
 GtkWidget *E5;
 GtkWidget *E6;
-multp *T;
+
+GtkWidget *E7;
+GtkWidget *E8;
+GtkWidget *E9;
+GtkWidget *E10;
+GtkWidget *E11;
+GtkWidget *E12;
+
 
 //boutton
 GtkWidget *btn_add_book;
@@ -81,10 +88,10 @@ void show_book_window();
 void close_book_return_to_menu();
 
 
-static void setup_tree_view (GtkWidget *);
+void setup_tree_view (GtkWidget *);
 void print_books(GtkWidget *, gpointer);
 
-int livre_exist(Livre);
+int livre_exist(int );
 void print_all();
 void print_livre();
 

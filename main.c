@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <gtk/gtk.h>
-#include "pages/main_page/acceuil.h"
+#include "acceuil.h"
 
 
 int main(int argc,char **argv){

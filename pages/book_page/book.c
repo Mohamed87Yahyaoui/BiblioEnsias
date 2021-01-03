@@ -1,4 +1,4 @@
-#include "../main_page/acceuil.h"
+#include "acceuil.h"
 #include "book.h"
 #include <gtk/gtk.h>
 
@@ -7,19 +7,19 @@ void rechercher_livre(char *titre){
     Livre temp;
     while (fread(&temp,sizeof(Livre),1,fp)==1){
         if(!strcmp(temp.titre_liv,titre)){
-//            print_livre(temp);
+            //print_livre(temp);
             return ;
         }
     }
     g_print("no such autor\n");
 }
 
-int livre_exist(Livre lv){
+int livre_exist(int num){
     Livre temp;
     FILE *pf=fopen("livre.dat","rb");
     if(!pf) exit(-1);
     while (fread(&temp,sizeof(Livre),1,pf)==1){
-        if(temp.num_liv==lv.num_liv) return 1;
+        if(temp.num_liv==num) return 1;
     }
     fclose(pf);
     return 0;
@@ -28,26 +28,16 @@ int livre_exist(Livre lv){
 void save_book(GtkButton *button,gpointer data){
     Livre lv;
 
-    E1=((multp *)data)->one;
     lv.num_liv=atoi(gtk_entry_get_text(GTK_ENTRY(E1)));
 
-    E2=((multp *)data)->two;
     strcpy(lv.titre_liv,gtk_entry_get_text(GTK_ENTRY(E2)));
-    //const char *titrelv=gtk_entry_get_text(GTK_ENTRY(E2));
 
-    E3=((multp *)data)->three;
     strcpy(lv.categ_liv,gtk_entry_get_text(GTK_ENTRY(E3)));
-    //const char *categlv=gtk_entry_get_text(GTK_ENTRY(E3));
-
-    E4=((multp *)data)->four;
+ 
     strcpy(lv.auteur_liv.nom_aut,gtk_entry_get_text(GTK_ENTRY(E4)));
-    //const char *autnom=gtk_entry_get_text(GTK_ENTRY(E4));
 
-    E5=((multp *)data)->five;
     strcpy(lv.auteur_liv.prenom_aut,gtk_entry_get_text(GTK_ENTRY(E5)));
-    //const char *autprenom=gtk_entry_get_text(GTK_ENTRY(E5));
 
-    E6=((multp *)data)->six;
     lv.emprunteur_liv=atoi(gtk_entry_get_text(GTK_ENTRY(E6)));
 
     // mode ab pour ajouter a la fin du fichier binaire
@@ -56,9 +46,10 @@ void save_book(GtkButton *button,gpointer data){
         printf("cannot open file \n");
         exit(-1);
     }
-    if(!livre_exist(lv)){
+    if(!livre_exist(lv.num_liv)){
         //ecriture
         fwrite(&lv,sizeof(Livre),1,fin);
+        //num_books++;
         printf("ecriture reussite !\n");
     }else printf("livre deja exist !\n");
     fclose(fin);
@@ -76,17 +67,9 @@ void info_window (GtkWidget *widget,gpointer data){
     E5=GTK_WIDGET(gtk_builder_get_object (b_builder,"E5"));
     E6=GTK_WIDGET(gtk_builder_get_object (b_builder,"E6"));
 
-    T=(multp *)malloc(sizeof(multp));
-    T->one=E1;
-    T->two=E2;
-    T->three=E3;
-    T->four=E4;
-    T->five=E5;
-    T->six=E6;
-
     save_btn=GTK_WIDGET(gtk_builder_get_object (b_builder,"save_button"));
 
-    g_signal_connect(save_btn,"clicked",G_CALLBACK (save_book),T);
+    g_signal_connect(save_btn,"clicked",G_CALLBACK (save_book),NULL);
     g_signal_connect(save_btn,"clicked",G_CALLBACK (show_book_window),NULL);
 
     gtk_widget_show_all(i_window);
@@ -131,36 +114,84 @@ void print_books(GtkWidget *button , gpointer data){
 }
 
 
-static void setup_tree_view (GtkWidget *treeview){
-/* Create a new GtkCellRendererText, add it to the tree view column and
-* append the column to the tree view. */
-renderer = gtk_cell_renderer_text_new ();
-column = gtk_tree_view_column_new_with_attributes("Numero", renderer, "text", NUM, NULL);
-gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+void setup_tree_view (GtkWidget *treeview){
+    /* Create a new GtkCellRendererText, add it to the tree view column and
+    * append the column to the tree view. */
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Numero", renderer, "text", NUM, NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
-renderer = gtk_cell_renderer_text_new ();
-column = gtk_tree_view_column_new_with_attributes("Titre", renderer, "text", TITRE, NULL);
-gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Titre", renderer, "text", TITRE, NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
-renderer = gtk_cell_renderer_text_new ();
-column = gtk_tree_view_column_new_with_attributes("Categorie", renderer, "text", CATEG, NULL);
-gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Categorie", renderer, "text", CATEG, NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
-renderer = gtk_cell_renderer_text_new ();
-column = gtk_tree_view_column_new_with_attributes("Nom Auteur", renderer, "text", NOM, NULL);
-gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Nom Auteur", renderer, "text", NOM, NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
-renderer = gtk_cell_renderer_text_new ();
-column = gtk_tree_view_column_new_with_attributes("Prenom Auteur", renderer, "text", PRENOM, NULL);
-gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Prenom Auteur", renderer, "text", PRENOM, NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
-renderer = gtk_cell_renderer_text_new ();
-column = gtk_tree_view_column_new_with_attributes("Nombre Emprunteur", renderer, "text", EMPR, NULL);
-gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
+    renderer = gtk_cell_renderer_text_new ();
+    column = gtk_tree_view_column_new_with_attributes("Nombre Emprunteur", renderer, "text", EMPR, NULL);
+    gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
 }
 
+void update_book(GtkButton *button,gpointer data){
+    Livre lv;
 
+    lv.num_liv=atoi(gtk_entry_get_text(GTK_ENTRY(E7)));
+    strcpy(lv.titre_liv,gtk_entry_get_text(GTK_ENTRY(E8)));
+    strcpy(lv.categ_liv,gtk_entry_get_text(GTK_ENTRY(E9)));
+    strcpy(lv.auteur_liv.nom_aut,gtk_entry_get_text(GTK_ENTRY(E10)));
+    strcpy(lv.auteur_liv.prenom_aut,gtk_entry_get_text(GTK_ENTRY(E11)));
+    lv.emprunteur_liv=atoi(gtk_entry_get_text(GTK_ENTRY(E12)));
+
+    // mode w+n pour mise a jour
+    FILE *fp=fopen("livre.dat","r+b");
+    Livre temp;
+    int found =0;
+    if(!fp) {
+        printf("cannot open file \n");
+        exit(-1);
+    }
+    while (fread(&temp,sizeof(Livre),1,fp)==1){
+        if(temp.num_liv==lv.num_liv){
+            fseek(fp,-1*sizeof(Livre),SEEK_CUR);
+            if(fwrite(&lv,sizeof(Livre),1,fp)==1) printf("mise a jour reussite !\n");
+            found=1;
+        }
+    }
+    
+    if(!found) printf("livre non existant !\n");
+    fclose(fp);
+    gtk_window_close(GTK_WINDOW(i_window));
+}
+
+void edit_book (GtkWidget *widget,gpointer data){
+    b_builder=gtk_builder_new_from_file("livre.glade");
+    i_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"edit_book_window"));
+
+    E7=GTK_WIDGET(gtk_builder_get_object (b_builder,"E7"));
+    E8=GTK_WIDGET(gtk_builder_get_object (b_builder,"E8"));
+    E9=GTK_WIDGET(gtk_builder_get_object (b_builder,"E9"));
+    E10=GTK_WIDGET(gtk_builder_get_object (b_builder,"E10"));
+    E11=GTK_WIDGET(gtk_builder_get_object (b_builder,"E11"));
+    E12=GTK_WIDGET(gtk_builder_get_object (b_builder,"E12"));
+
+    save_btn=GTK_WIDGET(gtk_builder_get_object (b_builder,"save_book"));
+
+    g_signal_connect(save_btn,"clicked",G_CALLBACK (update_book),NULL);
+    //g_signal_connect(save_btn,"clicked",G_CALLBACK (show_book_window),NULL);
+
+    gtk_widget_show_all(i_window);
+}
 
 
 void book_window (GtkWidget *widget,gpointer data){
@@ -179,6 +210,7 @@ void book_window (GtkWidget *widget,gpointer data){
     g_signal_connect(btn_add_book,"clicked",G_CALLBACK(info_window),NULL);
     g_signal_connect(btn_return_to_menu,"clicked",G_CALLBACK(close_book_return_to_menu),NULL);
     g_signal_connect(btn_show_books,"clicked",G_CALLBACK(print_books),NULL);
+    g_signal_connect(btn_edit_book,"clicked",G_CALLBACK(edit_book),NULL);
 
     gtk_widget_show_all(b_window);
 }

@@ -1,5 +1,5 @@
 #include "acceuil.h"
-#include "../book_page/book.h"
+#include "book.h"
 
 void acceuil_init(){
     builder=gtk_builder_new_from_file("acceuil.glade");
