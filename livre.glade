@@ -295,7 +295,7 @@ Ayant emprunte le livre</property>
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="btn_print_books">
+          <object class="GtkButton" id="btn_show_books">
             <property name="label" translatable="yes">Afficher</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
