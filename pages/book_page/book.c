@@ -2,36 +2,12 @@
 #include "book.h"
 #include <gtk/gtk.h>
 
-void print_livre(Livre lv){
-    g_print("Numero: %d\n",lv.num_liv);
-    g_print("Titre: %s\n",lv.titre_liv);
-    g_print("Catalogue: %s\n",lv.categ_liv);
-    g_print("Nom de l'auteur: %s\n",lv.auteur_liv.nom_aut);
-    g_print("Prenom de l'auteur: %s\n",lv.auteur_liv.prenom_aut);
-    g_print("Numero d'adherant ayant emprunte le livre: %d\n",lv.emprunteur_liv);
-}
-
-void print_all(){
-    FILE *pf=fopen("livre.dat","rb");
-    if(!pf) {
-        pf=fopen("livre.dat","w+b");
-        exit(-1);
-    }
-    Livre temp;
-    while (fread(&temp,sizeof(Livre),1,pf)==1){
-        printf("--------------\n");
-        print_livre(temp);
-        printf("--------------\n");
-    }
-    fclose(pf);
-}
-
 void rechercher_livre(char *titre){
     FILE *fp=fopen("livre.dat","rb");
     Livre temp;
     while (fread(&temp,sizeof(Livre),1,fp)==1){
         if(!strcmp(temp.titre_liv,titre)){
-            print_livre(temp);
+//            print_livre(temp);
             return ;
         }
     }
@@ -52,26 +28,26 @@ int livre_exist(Livre lv){
 void save_book(GtkButton *button,gpointer data){
     Livre lv;
 
-    GtkWidget *E1=((multp *)data)->one;
+    E1=((multp *)data)->one;
     lv.num_liv=atoi(gtk_entry_get_text(GTK_ENTRY(E1)));
 
-    GtkWidget *E2=((multp *)data)->two;
+    E2=((multp *)data)->two;
     strcpy(lv.titre_liv,gtk_entry_get_text(GTK_ENTRY(E2)));
     //const char *titrelv=gtk_entry_get_text(GTK_ENTRY(E2));
 
-    GtkWidget *E3=((multp *)data)->three;
+    E3=((multp *)data)->three;
     strcpy(lv.categ_liv,gtk_entry_get_text(GTK_ENTRY(E3)));
     //const char *categlv=gtk_entry_get_text(GTK_ENTRY(E3));
 
-    GtkWidget *E4=((multp *)data)->four;
+    E4=((multp *)data)->four;
     strcpy(lv.auteur_liv.nom_aut,gtk_entry_get_text(GTK_ENTRY(E4)));
     //const char *autnom=gtk_entry_get_text(GTK_ENTRY(E4));
 
-    GtkWidget *E5=((multp *)data)->five;
+    E5=((multp *)data)->five;
     strcpy(lv.auteur_liv.prenom_aut,gtk_entry_get_text(GTK_ENTRY(E5)));
     //const char *autprenom=gtk_entry_get_text(GTK_ENTRY(E5));
 
-    GtkWidget *E6=((multp *)data)->six;
+    E6=((multp *)data)->six;
     lv.emprunteur_liv=atoi(gtk_entry_get_text(GTK_ENTRY(E6)));
 
     // mode ab pour ajouter a la fin du fichier binaire
@@ -121,7 +97,7 @@ void print_books(GtkWidget *button , gpointer data){
     p_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title (GTK_WINDOW (p_window), "Liste de livres");
     gtk_container_set_border_width (GTK_CONTAINER (p_window), 10);
-    gtk_widget_set_size_request (p_window, 410, 450);
+    gtk_widget_set_size_request (p_window, 600, 450);
 
     treeview = gtk_tree_view_new ();
     setup_tree_view (treeview);
