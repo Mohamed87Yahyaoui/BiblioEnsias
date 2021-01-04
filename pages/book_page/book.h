@@ -33,12 +33,16 @@ COLUMNS
 
 GtkBuilder *b_builder;
 
+GtkBuilder *d_builder;
+
 //ajout d un livre window
 GtkWidget *i_window;
 //gestion des livres windw
 GtkWidget *b_window;
 // print book window
 GtkWidget *p_window;
+// delete book window 
+GtkWidget *d_window;
 // widget permettant de cree un tableau
 GtkWidget *treeview;
 // widget pour ajouter l'option du scroll
@@ -67,6 +71,8 @@ GtkWidget *E10;
 GtkWidget *E11;
 GtkWidget *E12;
 
+GtkWidget *E_delete;
+
 
 //boutton
 GtkWidget *btn_add_book;
@@ -77,6 +83,9 @@ GtkWidget *btn_search_book;
 GtkWidget *btn_show_books;
 GtkWidget *btn_return_to_menu;
 GtkWidget *btn_return_to_book_window;
+GtkWidget *btn_delete;
+
+GtkWidget *dialog;
 
 GtkWidget *save_btn;
 
@@ -91,8 +100,12 @@ void close_book_return_to_menu();
 void setup_tree_view (GtkWidget *);
 void print_books(GtkWidget *, gpointer);
 
-int livre_exist(int );
+int livre_exist(int);
 void print_all();
 void print_livre();
+
+void update_book(GtkButton *,gpointer);
+void delete_book(GtkWidget *, gpointer);
+void supprimer_livre(GtkButton *, gpointer);
 
 #endif // BOOK_H_INCLUDED

@@ -85,8 +85,13 @@ void print_books(GtkWidget *button , gpointer data){
     treeview = gtk_tree_view_new ();
     setup_tree_view (treeview);
     /* Create a new tree model with six columns, as 2 gint and 4 strings */
-    store = gtk_list_store_new (COLUMNS, G_TYPE_INT, G_TYPE_STRING , G_TYPE_STRING ,
-    G_TYPE_STRING , G_TYPE_STRING , G_TYPE_INT);
+    store = gtk_list_store_new (COLUMNS,
+    G_TYPE_INT,
+    G_TYPE_STRING , 
+    G_TYPE_STRING ,
+    G_TYPE_STRING ,
+    G_TYPE_STRING ,
+    G_TYPE_INT);
 
 
     // Add all of the products to the GtkListStore.
@@ -94,8 +99,14 @@ void print_books(GtkWidget *button , gpointer data){
     Livre lv;
     while (fread(&lv,sizeof(Livre),1,fp)==1){
         gtk_list_store_append (store, &iter);
-        gtk_list_store_set (store, &iter, NUM, lv.num_liv ,
-        TITRE, lv.titre_liv, CATEG, lv.categ_liv,NOM,lv.auteur_liv.nom_aut,PRENOM,lv.auteur_liv.prenom_aut,EMPR,lv.emprunteur_liv, -1);
+        gtk_list_store_set (store, &iter,
+        NUM, lv.num_liv ,
+        TITRE, lv.titre_liv, 
+        CATEG, lv.categ_liv,
+        NOM,lv.auteur_liv.nom_aut,
+        PRENOM,lv.auteur_liv.prenom_aut,
+        EMPR,lv.emprunteur_liv,
+        -1);
     }
 
     /* Add the tree model to the tree view and unreference it so that the model will
@@ -194,6 +205,79 @@ void edit_book (GtkWidget *widget,gpointer data){
 }
 
 
+void delete_book(GtkWidget *widget, gpointer data){
+    d_builder=gtk_builder_new_from_file("livre.glade");
+    d_window=GTK_WIDGET(gtk_builder_get_object(d_builder,"delete_window"));
+    btn_delete=GTK_WIDGET(gtk_builder_get_object(d_builder,"btn_delete"));
+    E_delete=GTK_WIDGET(gtk_builder_get_object(d_builder,"E_delete"));
+    g_signal_connect(btn_delete,"clicked",G_CALLBACK(supprimer_livre),NULL);
+    gtk_widget_show_all(d_window);
+}
+
+void supprimer_livre(GtkButton *button, gpointer data){
+    int num=atoi(gtk_entry_get_text(GTK_ENTRY(E_delete)));
+    FILE *fp=fopen("livre.dat","rb");
+    FILE *fp_temp=fopen("livre_temp.dat","w+b");
+    Livre temp;
+    int found =0;
+    if(!fp || !fp_temp) {
+        printf("cannot open file \n");
+        exit(-1);
+    }
+    while (fread(&temp,sizeof(Livre),1,fp)==1){
+        if(temp.num_liv==num) {found=1;continue;}
+        fwrite(&temp,sizeof(Livre),1,fp_temp);
+    }
+    fclose(fp);
+    fclose(fp_temp);
+    if(found) printf("suppression reussite \n");
+    else  printf("livre inexistant !\n");
+    remove("livre.dat");
+    rename("livre_temp.dat","livre.dat");
+    gtk_window_close(GTK_WINDOW(d_window));
+}
+
+void sort_books(GtkButton *button , gpointer data){
+    //Implement Bubble Sort
+    FILE *fp=fopen("livre.dat","r+b");
+    int swapped=1;
+    while (swapped){
+        rewind(fp);
+        swapped=0;
+        Livre temp1,temp2;
+        fread(&temp1,sizeof(Livre),1,fp);
+        fread(&temp2,sizeof(Livre),1,fp);
+        while (!feof(fp)){
+            if(strcmp(temp1.categ_liv,temp2.categ_liv)>0){
+                swapped=1;
+                fseek(fp,-2*sizeof(Livre),SEEK_CUR);
+                fwrite(&temp2,sizeof(Livre),1,fp);
+                fwrite(&temp1,sizeof(Livre),1,fp);
+            }
+            else{
+                temp1=temp2;
+            }
+            fread(&temp2,sizeof(Livre),1,fp);
+        }
+    }
+    GtkWidget *dialog;
+    /* Creation de la boite de message */
+    /* Type : Information >
+    GTK_MESSAGE_INFO */
+    /* Bouton : 1 OK >
+    GTK_BUTTONS_OK */
+    dialog = gtk_message_dialog_new (GTK_WINDOW(data),
+    GTK_DIALOG_MODAL,
+    GTK_MESSAGE_INFO,
+    GTK_BUTTONS_OK,
+    "Books Sorted Succefully !");
+    /* Affichage de la boite de message */
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    /* Destruction de la boite de message */
+    gtk_widget_destroy(dialog);
+    
+}
+
 void book_window (GtkWidget *widget,gpointer data){
     b_builder=gtk_builder_new_from_file("livre.glade");
 
@@ -211,6 +295,8 @@ void book_window (GtkWidget *widget,gpointer data){
     g_signal_connect(btn_return_to_menu,"clicked",G_CALLBACK(close_book_return_to_menu),NULL);
     g_signal_connect(btn_show_books,"clicked",G_CALLBACK(print_books),NULL);
     g_signal_connect(btn_edit_book,"clicked",G_CALLBACK(edit_book),NULL);
+    g_signal_connect(btn_delete_book,"clicked",G_CALLBACK(delete_book),NULL);
+    g_signal_connect(btn_sort,"clicked",G_CALLBACK(sort_books),NULL);
 
     gtk_widget_show_all(b_window);
 }

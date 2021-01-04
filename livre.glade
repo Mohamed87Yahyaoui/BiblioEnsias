@@ -2,7 +2,54 @@
 <!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
-  <object class="GtkWindow" id="edit_window">
+  <object class="GtkWindow" id="delete_window">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Delete Book</property>
+    <child>
+      <object class="GtkGrid">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Numero du livre : </property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="E_delete">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_delete">
+            <property name="label" translatable="yes">Delete</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
+            <property name="width">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
+  </object>
+  <object class="GtkWindow" id="edit_book_window">
     <property name="name">Book's Information</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Book's Info</property>
@@ -60,6 +107,7 @@
             <property name="can_focus">True</property>
             <property name="margin_right">26</property>
             <property name="margin_end">26</property>
+            <property name="input_purpose">number</property>
           </object>
           <packing>
             <property name="left_attach">1</property>
@@ -72,6 +120,8 @@
             <property name="can_focus">True</property>
             <property name="margin_right">26</property>
             <property name="margin_end">26</property>
+            <property name="input_purpose">name</property>
+            <property name="input_hints">GTK_INPUT_HINT_UPPERCASE_CHARS | GTK_INPUT_HINT_NONE</property>
           </object>
           <packing>
             <property name="left_attach">1</property>
@@ -176,7 +226,7 @@ Ayant emprunte le livre</property>
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="save_button1">
+          <object class="GtkButton" id="save_book">
             <property name="label" translatable="yes">Save</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
@@ -390,7 +440,7 @@ Ayant emprunte le livre</property>
   </object>
   <object class="GtkWindow" id="livre_window">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">ACCEUIL</property>
+    <property name="title" translatable="yes">LIVRE</property>
     <property name="default_width">500</property>
     <property name="default_height">600</property>
     <child>
@@ -463,7 +513,7 @@ Ayant emprunte le livre</property>
         </child>
         <child>
           <object class="GtkButton" id="btn_sort">
-            <property name="label" translatable="yes">Ordonne par Categorie</property>
+            <property name="label" translatable="yes">Ordonner par categorie</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="receives_default">True</property>
