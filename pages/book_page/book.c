@@ -297,7 +297,7 @@ void book_window (GtkWidget *widget,gpointer data){
     g_signal_connect(btn_edit_book,"clicked",G_CALLBACK(edit_book),NULL);
     g_signal_connect(btn_delete_book,"clicked",G_CALLBACK(delete_book),NULL);
     g_signal_connect(btn_sort,"clicked",G_CALLBACK(sort_books),NULL);
-
+    g_signal_connect(btn_search_book,"clicked",G_CALLBACK(search_book),NULL);
     gtk_widget_show_all(b_window);
 }
 
