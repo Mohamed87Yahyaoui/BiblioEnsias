@@ -1,4 +1,5 @@
 #include "acceuil.h"
+#include "emprunt.h"
 #include "book.h"
 
 void acceuil_init(){
@@ -10,6 +11,9 @@ void acceuil_init(){
     btn_quit=GTK_WIDGET(gtk_builder_get_object (builder,"btn_quit"));
 
     g_signal_connect(start_window,"destroy",G_CALLBACK(gtk_main_quit),NULL);
+
+    g_signal_connect(btn_emprunt,"clicked",G_CALLBACK(emprunt_window),NULL);
+    g_signal_connect (btn_emprunt,"clicked", G_CALLBACK (hide_acceuil), NULL);
 
     g_signal_connect (btn_livre, "clicked", G_CALLBACK (book_window), NULL);
     g_signal_connect (btn_livre, "clicked", G_CALLBACK (hide_acceuil), NULL);
