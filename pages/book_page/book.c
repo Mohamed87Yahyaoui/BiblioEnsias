@@ -3,6 +3,7 @@
 #include <gtk/gtk.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
 
 void dialog_window(char *message ){
     GtkWidget *dialog;
@@ -245,7 +246,8 @@ void update_book(GtkButton *button,gpointer data){
     }
     while (fread(&temp,sizeof(Livre),1,fp)==1){
         if(temp.num_liv==lv.num_liv){
-            fseek(fp,-1*sizeof(Livre),SEEK_CUR);
+            unsigned long long int dep=-1*sizeof(Livre);
+            fseek(fp,dep,SEEK_CUR);
             if(fwrite(&lv,sizeof(Livre),1,fp)==1) dialog_window("\nmise a jour reussite !");
             found=1;
         }
@@ -322,7 +324,8 @@ void sort_books(GtkButton *button , gpointer data){
         while (!feof(fp)){
             if(strcmp(temp1.categ_liv,temp2.categ_liv)>0){
                 swapped=1;
-                fseek(fp,-2*sizeof(Livre),SEEK_CUR);
+                unsigned long long int dep=-2*sizeof(Livre);
+                fseek(fp,dep,SEEK_CUR);
                 fwrite(&temp2,sizeof(Livre),1,fp);
                 fwrite(&temp1,sizeof(Livre),1,fp);
             }
