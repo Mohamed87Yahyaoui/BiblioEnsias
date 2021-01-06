@@ -12,12 +12,17 @@ void emprunt_window(GtkWidget *widget , gpointer data){
     btn_rendre_livre=GTK_WIDGET(gtk_builder_get_object (e_builder,"btn_rendre_livre"));
     btn_emprunteur=GTK_WIDGET(gtk_builder_get_object (e_builder,"btn_emprunteur"));
     btn_return_to_menu=GTK_WIDGET(gtk_builder_get_object (e_builder,"btn_return_to_menu"));
-/*
-    g_signal_connect(btn_emprunter,"clicked",G_CALLBACK(),NULL);
+
+   // g_signal_connect(btn_emprunter,"clicked",G_CALLBACK(),NULL);
     g_signal_connect(btn_return_to_menu,"clicked",G_CALLBACK(close_empr_return_to_menu),NULL);
-    g_signal_connect(btn_livres_empruntes,"clicked",G_CALLBACK(),NULL);
-    g_signal_connect(btn_rendre_livre,"clicked",G_CALLBACK(),NULL);
-    g_signal_connect(btn_emprunteur,"clicked",G_CALLBACK(),NULL);
-*/
+   // g_signal_connect(btn_livres_empruntes,"clicked",G_CALLBACK(),NULL);
+   // g_signal_connect(btn_rendre_livre,"clicked",G_CALLBACK(),NULL);
+   // g_signal_connect(btn_emprunteur,"clicked",G_CALLBACK(),NULL);
+
     gtk_widget_show_all(e_window);
+}
+
+void close_empr_return_to_menu(){
+    gtk_window_close(GTK_WINDOW(e_window));
+    show_acceuil();
 }
