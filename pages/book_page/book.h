@@ -28,12 +28,14 @@ EMPR,
 COLUMNS
 };
 
-//static int num_books=0;
-
 
 GtkBuilder *b_builder;
 
 GtkBuilder *d_builder;
+
+GtkBuilder *s_builder;
+
+GtkBuilder *sh_builder;
 
 //ajout d un livre window
 GtkWidget *i_window;
@@ -41,9 +43,13 @@ GtkWidget *i_window;
 GtkWidget *b_window;
 // print book window
 GtkWidget *p_window;
+// search window
+GtkWidget *search_window;
 // delete book window 
 GtkWidget *d_window;
 // widget permettant de cree un tableau
+GtkWidget *sh_window;
+
 GtkWidget *treeview;
 // widget pour ajouter l'option du scroll
 GtkWidget *scrolled_win;
@@ -72,6 +78,16 @@ GtkWidget *E11;
 GtkWidget *E12;
 
 GtkWidget *E_delete;
+GtkWidget *E_search1;
+GtkWidget *E_search2;
+
+//Sortie
+GtkWidget *S_num;
+GtkWidget *S_nom;
+GtkWidget *S_prenom;
+GtkWidget *S_categ;
+GtkWidget *S_titre;
+GtkWidget *S_empr;
 
 
 //boutton
@@ -84,7 +100,9 @@ GtkWidget *btn_show_books;
 GtkWidget *btn_return_to_menu;
 GtkWidget *btn_return_to_book_window;
 GtkWidget *btn_delete;
-
+GtkWidget *btn_search;
+GtkWidget *btn_search;
+GtkWidget *btn_retour;
 GtkWidget *dialog;
 
 GtkWidget *save_btn;
@@ -107,5 +125,10 @@ void print_livre();
 void update_book(GtkButton *,gpointer);
 void delete_book(GtkWidget *, gpointer);
 void supprimer_livre(GtkButton *, gpointer);
+
+
+void dialog_window(char *);
+void print_book_window(Livre);
+void rechercher_livre(GtkWidget *, gpointer);
 
 #endif // BOOK_H_INCLUDED

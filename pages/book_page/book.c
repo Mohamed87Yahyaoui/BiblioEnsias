@@ -1,13 +1,75 @@
 #include "acceuil.h"
 #include "book.h"
 #include <gtk/gtk.h>
+#include <ctype.h>
+#include <string.h>
 
-void rechercher_livre(char *titre){
+void dialog_window(char *message ){
+    GtkWidget *dialog;
+    /* Creation de la boite de message */
+    /* Type : Information >
+    GTK_MESSAGE_INFO */
+    /* Bouton : 1 OK >
+    GTK_BUTTONS_OK */
+    dialog = gtk_message_dialog_new (NULL,
+    GTK_DIALOG_MODAL,
+    GTK_MESSAGE_INFO,
+    GTK_BUTTONS_OK,
+    "%s",message);
+    /* Affichage de la boite de message */
+    gtk_dialog_run(GTK_DIALOG(dialog));
+    /* Destruction de la boite de message */
+    gtk_widget_destroy(dialog);
+}
+
+void hide_sh(){
+    gtk_window_close(GTK_WINDOW(sh_window));
+    gtk_window_close(GTK_WINDOW(search_window));
+}
+
+void print_book_window(Livre lv){
+    char buffer[50];
+    sh_builder=gtk_builder_new_from_file("livre.glade");
+    sh_window=GTK_WIDGET(gtk_builder_get_object (sh_builder,"show_book_window"));
+
+    S_num=GTK_WIDGET(gtk_builder_get_object (sh_builder,"S_num"));
+    S_categ=GTK_WIDGET(gtk_builder_get_object (sh_builder,"S_categ"));
+    S_titre=GTK_WIDGET(gtk_builder_get_object (sh_builder,"S_titre"));
+    S_nom=GTK_WIDGET(gtk_builder_get_object (sh_builder,"S_nom"));
+    S_prenom=GTK_WIDGET(gtk_builder_get_object (sh_builder,"S_prenom"));
+    S_empr=GTK_WIDGET(gtk_builder_get_object (sh_builder,"S_empr"));
+    // sprintf pour ecrire dans buffer(de type string)
+    sprintf(buffer,"%d",lv.num_liv);
+    gtk_label_set_text(GTK_LABEL(S_num),buffer);
+    gtk_label_set_text(GTK_LABEL(S_categ),lv.categ_liv);
+    gtk_label_set_text(GTK_LABEL(S_titre),lv.titre_liv);
+    gtk_label_set_text(GTK_LABEL(S_nom),lv.auteur_liv.nom_aut);
+    gtk_label_set_text(GTK_LABEL(S_prenom),lv.auteur_liv.prenom_aut);
+    sprintf(buffer,"%d",lv.emprunteur_liv);
+    gtk_label_set_text(GTK_LABEL(S_empr),buffer);
+
+    btn_retour=GTK_WIDGET(gtk_builder_get_object (sh_builder,"return_button"));
+
+    g_signal_connect(btn_retour,"clicked",G_CALLBACK (hide_sh),NULL);
+
+    gtk_widget_show_all(sh_window);
+}
+void rechercher_livre(GtkWidget *widget , gpointer data){
+    const char *titre=gtk_entry_get_text(GTK_ENTRY(E_search1));
+    const char *categorie=gtk_entry_get_text(GTK_ENTRY(E_search2));
+    /*
+    for (int i = 0; i < strlen(titre); i++){
+        titre[i]=toupper(titre[i]);
+    }
+    for (int i = 0; i < strlen(titre); i++){
+        categorie[i]=toupper(categorie[i]);
+    }
+    */
     FILE *fp=fopen("livre.dat","rb");
     Livre temp;
     while (fread(&temp,sizeof(Livre),1,fp)==1){
-        if(!strcmp(temp.titre_liv,titre)){
-            //print_livre(temp);
+        if(!strcmp(temp.titre_liv,titre) && !strcmp(temp.categ_liv,categorie) ){
+            print_book_window(temp);
             return ;
         }
     }
@@ -33,7 +95,16 @@ void save_book(GtkButton *button,gpointer data){
     strcpy(lv.titre_liv,gtk_entry_get_text(GTK_ENTRY(E2)));
 
     strcpy(lv.categ_liv,gtk_entry_get_text(GTK_ENTRY(E3)));
- 
+/*
+    for (int i = 0; i < strlen(lv.titre_liv); i++){
+        lv.titre_liv[i]=toupper(lv.titre_liv[i]);
+    }
+
+    for (int i = 0; i < strlen(lv.categ_liv); i++){
+        lv.categ_liv[i]=toupper(lv.categ_liv[i]);
+    }
+    
+ */
     strcpy(lv.auteur_liv.nom_aut,gtk_entry_get_text(GTK_ENTRY(E4)));
 
     strcpy(lv.auteur_liv.prenom_aut,gtk_entry_get_text(GTK_ENTRY(E5)));
@@ -43,15 +114,16 @@ void save_book(GtkButton *button,gpointer data){
     // mode ab pour ajouter a la fin du fichier binaire
     FILE *fin=fopen("livre.dat","ab");
     if(!fin) {
-        printf("cannot open file \n");
+        dialog_window("\ncannot open file");
         exit(-1);
     }
     if(!livre_exist(lv.num_liv)){
         //ecriture
         fwrite(&lv,sizeof(Livre),1,fin);
         //num_books++;
-        printf("ecriture reussite !\n");
-    }else printf("livre deja exist !\n");
+        dialog_window("\necriture reussite !");
+    }else 
+        dialog_window("\nlivre deja exist !");
     fclose(fin);
     gtk_window_close(GTK_WINDOW(i_window));
 }
@@ -92,7 +164,6 @@ void print_books(GtkWidget *button , gpointer data){
     G_TYPE_STRING ,
     G_TYPE_STRING ,
     G_TYPE_INT);
-
 
     // Add all of the products to the GtkListStore.
     FILE *fp=fopen("livre.dat","rb");
@@ -169,18 +240,19 @@ void update_book(GtkButton *button,gpointer data){
     Livre temp;
     int found =0;
     if(!fp) {
-        printf("cannot open file \n");
+        dialog_window("\ncannot open file");
         exit(-1);
     }
     while (fread(&temp,sizeof(Livre),1,fp)==1){
         if(temp.num_liv==lv.num_liv){
             fseek(fp,-1*sizeof(Livre),SEEK_CUR);
-            if(fwrite(&lv,sizeof(Livre),1,fp)==1) printf("mise a jour reussite !\n");
+            if(fwrite(&lv,sizeof(Livre),1,fp)==1) dialog_window("\nmise a jour reussite !");
             found=1;
         }
     }
     
-    if(!found) printf("livre non existant !\n");
+    if(!found) 
+        dialog_window("\nlivre non existant !");
     fclose(fp);
     gtk_window_close(GTK_WINDOW(i_window));
 }
@@ -221,7 +293,7 @@ void supprimer_livre(GtkButton *button, gpointer data){
     Livre temp;
     int found =0;
     if(!fp || !fp_temp) {
-        printf("cannot open file \n");
+        dialog_window("\ncannot open files");
         exit(-1);
     }
     while (fread(&temp,sizeof(Livre),1,fp)==1){
@@ -230,8 +302,8 @@ void supprimer_livre(GtkButton *button, gpointer data){
     }
     fclose(fp);
     fclose(fp_temp);
-    if(found) printf("suppression reussite \n");
-    else  printf("livre inexistant !\n");
+    if(found) dialog_window("\nSuppression reussite");
+    else  dialog_window("\nLivre inexistant !");
     remove("livre.dat");
     rename("livre_temp.dat","livre.dat");
     gtk_window_close(GTK_WINDOW(d_window));
@@ -260,22 +332,18 @@ void sort_books(GtkButton *button , gpointer data){
             fread(&temp2,sizeof(Livre),1,fp);
         }
     }
-    GtkWidget *dialog;
-    /* Creation de la boite de message */
-    /* Type : Information >
-    GTK_MESSAGE_INFO */
-    /* Bouton : 1 OK >
-    GTK_BUTTONS_OK */
-    dialog = gtk_message_dialog_new (GTK_WINDOW(data),
-    GTK_DIALOG_MODAL,
-    GTK_MESSAGE_INFO,
-    GTK_BUTTONS_OK,
-    "Books Sorted Succefully !");
-    /* Affichage de la boite de message */
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    /* Destruction de la boite de message */
-    gtk_widget_destroy(dialog);
-    
+    dialog_window("\nBooks Sorted Succefully !");
+}
+
+void search_book(GtkWidget *widget , gpointer data){
+    s_builder=gtk_builder_new_from_file("livre.glade");
+    search_window=GTK_WIDGET(gtk_builder_get_object(s_builder,"search_window"));
+    E_search1=GTK_WIDGET(gtk_builder_get_object(s_builder,"E_search1"));
+    E_search2=GTK_WIDGET(gtk_builder_get_object(s_builder,"E_search2"));
+    btn_search=GTK_WIDGET(gtk_builder_get_object(s_builder,"btn_search"));
+
+    g_signal_connect(btn_search,"clicked",G_CALLBACK(rechercher_livre),NULL);
+    gtk_widget_show_all(search_window);
 }
 
 void book_window (GtkWidget *widget,gpointer data){
