@@ -5,7 +5,6 @@
   <object class="GtkWindow" id="start_window">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">ACCEUIL</property>
-    <property name="window-position">center-always</property>
     <property name="default-width">500</property>
     <property name="default-height">600</property>
     <property name="gravity">center</property>

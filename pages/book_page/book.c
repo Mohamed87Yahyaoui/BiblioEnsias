@@ -1,36 +1,88 @@
-#include "acceuil.h"
+#include<gtk/gtk.h>
+#include<stdlib.h>
 #include "book.h"
-#include <gtk/gtk.h>
-#include <ctype.h>
-#include <string.h>
-#include <stdlib.h>
 
-void dialog_window(char *message ){
-    GtkWidget *dialog;
-    /* Creation de la boite de message */
-    /* Type : Information >
-    GTK_MESSAGE_INFO */
-    /* Bouton : 1 OK >
-    GTK_BUTTONS_OK */
-    dialog = gtk_message_dialog_new (NULL,
-    GTK_DIALOG_MODAL,
-    GTK_MESSAGE_INFO,
-    GTK_BUTTONS_OK,
-    "%s",message);
-    /* Affichage de la boite de message */
-    gtk_dialog_run(GTK_DIALOG(dialog));
-    /* Destruction de la boite de message */
-    gtk_widget_destroy(dialog);
-}
+//builers
+GtkBuilder *b_builder;
+GtkBuilder *d_builder;
+GtkBuilder *s_builder;
+GtkBuilder *sh_builder;
 
-void hide_sh(){
-    gtk_window_close(GTK_WINDOW(sh_window));
-    gtk_window_close(GTK_WINDOW(search_window));
-}
+//ajout d un livre window
+GtkWidget *i_window;
+//gestion des livres windw
+GtkWidget *b_window;
+// print book window
+GtkWidget *p_window;
+// search window
+GtkWidget *search_window;
+// delete book window
+GtkWidget *d_window;
+// widget permettant de cree un tableau
+GtkWidget *sh_window;
+
+GtkWidget *treeview;
+// widget pour ajouter l'option du scroll
+GtkWidget *scrolled_win;
+// un store pour stocker les differants livres
+GtkListStore *store;
+// iterateur pour itterer dans l'ensembles des livres
+GtkTreeIter iter;
+// permet de creer des colonnes pour le tableau , s'utilise avec treeview
+GtkCellRenderer *renderer;
+// pour voir la colonne
+GtkTreeViewColumn *column;
+
+// entre d'ajout
+GtkWidget *E1;
+GtkWidget *E2;
+GtkWidget *E3;
+GtkWidget *E4;
+GtkWidget *E5;
+GtkWidget *E6;
+
+GtkWidget *E7;
+GtkWidget *E8;
+GtkWidget *E9;
+GtkWidget *E10;
+GtkWidget *E11;
+GtkWidget *E12;
+
+GtkWidget *E_delete;
+GtkWidget *E_search1;
+GtkWidget *E_search2;
+
+//Sortie
+GtkWidget *S_num;
+GtkWidget *S_nom;
+GtkWidget *S_prenom;
+GtkWidget *S_categ;
+GtkWidget *S_titre;
+GtkWidget *S_empr;
+
+
+//boutton
+GtkWidget *btn_add_book;
+GtkWidget *btn_edit_book;
+GtkWidget *btn_delete_book;
+GtkWidget *btn_sort;
+GtkWidget *btn_search_book;
+GtkWidget *btn_show_books;
+GtkWidget *btn_return_to_menu;
+GtkWidget *btn_return_to_book_window;
+GtkWidget *btn_delete;
+GtkWidget *btn_search;
+GtkWidget *btn_search;
+GtkWidget *btn_retour;
+GtkWidget *dialog;
+GtkWidget *save_btn;
+
+
+
 
 void print_book_window(Livre lv){
     char buffer[50];
-    sh_builder=gtk_builder_new_from_file("livre.glade");
+    sh_builder=gtk_builder_new_from_file("../livre.glade");
     sh_window=GTK_WIDGET(gtk_builder_get_object (sh_builder,"show_book_window"));
 
     S_num=GTK_WIDGET(gtk_builder_get_object (sh_builder,"S_num"));
@@ -104,7 +156,7 @@ void save_book(GtkButton *button,gpointer data){
     for (int i = 0; i < strlen(lv.categ_liv); i++){
         lv.categ_liv[i]=toupper(lv.categ_liv[i]);
     }
-    
+
  */
     strcpy(lv.auteur_liv.nom_aut,gtk_entry_get_text(GTK_ENTRY(E4)));
 
@@ -123,14 +175,14 @@ void save_book(GtkButton *button,gpointer data){
         fwrite(&lv,sizeof(Livre),1,fin);
         //num_books++;
         dialog_window("\necriture reussite !");
-    }else 
+    }else
         dialog_window("\nlivre deja exist !");
     fclose(fin);
     gtk_window_close(GTK_WINDOW(i_window));
 }
 
 void info_window (GtkWidget *widget,gpointer data){
-    b_builder=gtk_builder_new_from_file("livre.glade");
+    b_builder=gtk_builder_new_from_file("../livre.glade");
     i_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"info_window"));
 
     E1=GTK_WIDGET(gtk_builder_get_object (b_builder,"E1"));
@@ -160,7 +212,7 @@ void print_books(GtkWidget *button , gpointer data){
     /* Create a new tree model with six columns, as 2 gint and 4 strings */
     store = gtk_list_store_new (COLUMNS,
     G_TYPE_INT,
-    G_TYPE_STRING , 
+    G_TYPE_STRING ,
     G_TYPE_STRING ,
     G_TYPE_STRING ,
     G_TYPE_STRING ,
@@ -173,7 +225,7 @@ void print_books(GtkWidget *button , gpointer data){
         gtk_list_store_append (store, &iter);
         gtk_list_store_set (store, &iter,
         NUM, lv.num_liv ,
-        TITRE, lv.titre_liv, 
+        TITRE, lv.titre_liv,
         CATEG, lv.categ_liv,
         NOM,lv.auteur_liv.nom_aut,
         PRENOM,lv.auteur_liv.prenom_aut,
@@ -252,15 +304,15 @@ void update_book(GtkButton *button,gpointer data){
             found=1;
         }
     }
-    
-    if(!found) 
+
+    if(!found)
         dialog_window("\nlivre non existant !");
     fclose(fp);
     gtk_window_close(GTK_WINDOW(i_window));
 }
 
 void edit_book (GtkWidget *widget,gpointer data){
-    b_builder=gtk_builder_new_from_file("livre.glade");
+    b_builder=gtk_builder_new_from_file("../livre.glade");
     i_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"edit_book_window"));
 
     E7=GTK_WIDGET(gtk_builder_get_object (b_builder,"E7"));
@@ -280,7 +332,7 @@ void edit_book (GtkWidget *widget,gpointer data){
 
 
 void delete_book(GtkWidget *widget, gpointer data){
-    d_builder=gtk_builder_new_from_file("livre.glade");
+    d_builder=gtk_builder_new_from_file("../livre.glade");
     d_window=GTK_WIDGET(gtk_builder_get_object(d_builder,"delete_window"));
     btn_delete=GTK_WIDGET(gtk_builder_get_object(d_builder,"btn_delete"));
     E_delete=GTK_WIDGET(gtk_builder_get_object(d_builder,"E_delete"));
@@ -339,7 +391,7 @@ void sort_books(GtkButton *button , gpointer data){
 }
 
 void search_book(GtkWidget *widget , gpointer data){
-    s_builder=gtk_builder_new_from_file("livre.glade");
+    s_builder=gtk_builder_new_from_file("../livre.glade");
     search_window=GTK_WIDGET(gtk_builder_get_object(s_builder,"search_window"));
     E_search1=GTK_WIDGET(gtk_builder_get_object(s_builder,"E_search1"));
     E_search2=GTK_WIDGET(gtk_builder_get_object(s_builder,"E_search2"));
@@ -350,7 +402,7 @@ void search_book(GtkWidget *widget , gpointer data){
 }
 
 void book_window (GtkWidget *widget,gpointer data){
-    b_builder=gtk_builder_new_from_file("livre.glade");
+    b_builder=gtk_builder_new_from_file("../livre.glade");
 
     b_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"livre_window"));
 
@@ -383,4 +435,9 @@ void show_book_window(){
 void close_book_return_to_menu(){
     gtk_window_close(GTK_WINDOW(b_window));
     show_acceuil();
+}
+
+void hide_sh(){
+    gtk_window_close(GTK_WINDOW(sh_window));
+    gtk_window_close(GTK_WINDOW(search_window));
 }

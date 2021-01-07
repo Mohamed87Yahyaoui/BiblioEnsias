@@ -18,12 +18,14 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -lm -O0 -Wall -Werror -fdump-rtl-expand")
 include_directories(${SRC_DIR}/pages/book_page)
 include_directories(${SRC_DIR}/pages/main_page)
 include_directories(${SRC_DIR}/pages/emprunt_page)
+include_directories(${SRC_DIR}/pages/adherant_page)
 
 set(SRCS
     ${SRC_DIR}/main.c
     ${SRC_DIR}/pages/book_page/book.c
     ${SRC_DIR}/pages/main_page/acceuil.c
-    ${SRC_DIR}/pages/emprunt_page/emprunt.c
+	${SRC_DIR}/pages/emprunt_page/emprunt.c
+	${SRC_DIR}/pages/adherant_page/adherant.c
 )
 
 add_executable(BIBLIOENSIAS ${SRCS})
