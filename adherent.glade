@@ -160,18 +160,6 @@
           </packing>
         </child>
         <child>
-          <object class="GtkEntry" id="E6adh">
-            <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="margin_right">26</property>
-            <property name="margin_end">26</property>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">6</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkButton" id="save_button_adh">
             <property name="label" translatable="yes">Save</property>
             <property name="visible">True</property>
@@ -187,6 +175,18 @@
             <property name="left_attach">0</property>
             <property name="top_attach">7</property>
             <property name="width">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="E6adh">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="margin_right">26</property>
+            <property name="margin_end">26</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">6</property>
           </packing>
         </child>
       </object>

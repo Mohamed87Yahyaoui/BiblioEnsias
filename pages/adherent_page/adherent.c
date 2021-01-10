@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
-#include "adherant.h"
+#include "adherent.h"
 
 
 GtkBuilder *a_builder;
@@ -105,7 +105,7 @@ void save_adh(GtkButton *button,gpointer data){
 }
 
 void adh_info_window (GtkWidget *widget,gpointer data){
-    a_builder=gtk_builder_new_from_file("../adherent.glade");
+    a_builder=gtk_builder_new_from_file("adherent.glade");
     adh_i_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_info_window"));
 
     E1adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E1adh"));
@@ -158,9 +158,10 @@ void delete_adh(GtkButton *button,gpointer data)
             fwrite(&adh1, sizeof(adherent), 1, fin);
         }
         dialog_window("Suppression reussie");
+        fclose(ftemp);
     }else dialog_window("adherent n existe pas !");
     fclose(fin);
-    fclose(ftemp);
+
     gtk_window_close(GTK_WINDOW(adh_supprimer_window));
 }
 
@@ -168,7 +169,7 @@ void delete_adh(GtkButton *button,gpointer data)
 
 void adh_supp_window(GtkWidget *widget, gpointer data)
 {
-    a_builder=gtk_builder_new_from_file("../supprimer_adh.glade");
+    a_builder=gtk_builder_new_from_file("supprimer_adh.glade");
     adh_supprimer_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_supp_window"));
 
     Esupp=GTK_WIDGET(gtk_builder_get_object (a_builder,"Esupp"));
@@ -183,7 +184,7 @@ void adh_supp_window(GtkWidget *widget, gpointer data)
 
 void adh_rech_window(GtkWidget *widget, gpointer data)
 {
-    a_builder=gtk_builder_new_from_file("../rechercher_adh.glade");
+    a_builder=gtk_builder_new_from_file("rechercher_adh.glade");
     adh_rechercher_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_rech_window"));
 
     Erech=GTK_WIDGET(gtk_builder_get_object (a_builder,"Erech"));
@@ -296,7 +297,7 @@ void rech_adh(GtkWidget *button , gpointer data){
 
 
 void adh_window (GtkWidget *widget,gpointer data){
-    a_builder=gtk_builder_new_from_file("../gestion_adherents.glade");
+    a_builder=gtk_builder_new_from_file("gestion_adherents.glade");
 
     a_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_window"));
 
@@ -403,7 +404,7 @@ void setup_tree_view_adh (GtkWidget *treeview_adh){
 
 void adh_modif_window(GtkWidget *widget, gpointer data)
 {
-    a_builder=gtk_builder_new_from_file("../modif_adh_conf.glade");
+    a_builder=gtk_builder_new_from_file("modif_adh_conf.glade");
     adh_modifier_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"modif_adh_conf"));
 
     Emodif=GTK_WIDGET(gtk_builder_get_object (a_builder,"Emodif"));
@@ -411,7 +412,7 @@ void adh_modif_window(GtkWidget *widget, gpointer data)
 
 
 
-    g_signal_connect(conf1_modif_adh, "clicked", G_CALLBACK (adh_conf_modif_window), Emodif);
+    g_signal_connect(conf1_modif_adh, "clicked", G_CALLBACK (adh_conf_modif_window), NULL);
     g_signal_connect(conf1_modif_adh, "clicked", G_CALLBACK (show_adh_window), NULL);
 
     gtk_widget_show_all(adh_modifier_window);
@@ -432,7 +433,7 @@ void adh_conf_modif_window(GtkWidget *widget, gpointer data)
     if(adh_exist(adh1))
     {
         fclose(fin);
-        a_builder=gtk_builder_new_from_file("../modif_adh.glade");
+        a_builder=gtk_builder_new_from_file("modif_adh.glade");
         adh_modification_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_modif_window"));
 
 
@@ -453,7 +454,7 @@ void adh_conf_modif_window(GtkWidget *widget, gpointer data)
     }
     else dialog_window("adherent n existe pas !");
     fclose(fin);
-    gtk_widget_show_all(adh_modifier_window);
+    //gtk_widget_show_all(adh_modifier_window);
 }
 
 void modif_adh(GtkButton * button, gpointer data)
@@ -516,7 +517,6 @@ void close_adh_return_to_menu(){
     gtk_window_close(GTK_WINDOW(a_window));
     show_acceuil();
 }
-
 
 
 

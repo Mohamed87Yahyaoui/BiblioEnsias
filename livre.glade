@@ -1,524 +1,466 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.1 -->
+<!-- Generated with glade 3.36.0 -->
 <interface>
   <requires lib="gtk+" version="3.22"/>
   <object class="GtkWindow" id="delete_window">
-    <property name="can-focus">False</property>
+    <property name="can_focus">False</property>
     <property name="title" translatable="yes">Delete Book</property>
-    <property name="window-position">center-always</property>
+    <property name="window_position">center-always</property>
     <property name="gravity">center</property>
     <child>
-      <!-- n-columns=3 n-rows=3 -->
       <object class="GtkGrid">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Numero du livre : </property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E_delete">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
+            <property name="can_focus">True</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">0</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="btn_delete">
             <property name="label" translatable="yes">Delete</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">1</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
             <property name="width">2</property>
           </packing>
         </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
   <object class="GtkWindow" id="edit_book_window">
     <property name="name">Book's Information</property>
-    <property name="can-focus">False</property>
+    <property name="can_focus">False</property>
     <property name="title" translatable="yes">Book's Info</property>
-    <property name="window-position">center-always</property>
-    <property name="default-width">400</property>
-    <property name="default-height">300</property>
+    <property name="window_position">center-always</property>
+    <property name="default_width">400</property>
+    <property name="default_height">300</property>
     <property name="gravity">center</property>
     <child>
-      <!-- n-columns=3 n-rows=8 -->
       <object class="GtkGrid">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="row-spacing">36</property>
-        <property name="column-homogeneous">True</property>
+        <property name="can_focus">False</property>
+        <property name="row_spacing">36</property>
+        <property name="column_homogeneous">True</property>
         <child>
           <object class="GtkLabel" id="title1">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-top">16</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">16</property>
             <property name="label" translatable="yes">EDIT BOOK'S INFORMATION</property>
             <attributes>
               <attribute name="font-desc" value="Ubuntu Light 14"/>
             </attributes>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
             <property name="width">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Numero                        : </property>
             <property name="xalign">0.4099999964237213</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">1</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Title du livre               : </property>
             <property name="xalign">0.3799999952316284</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">2</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E7">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-right">26</property>
-            <property name="margin-end">26</property>
-            <property name="input-purpose">number</property>
+            <property name="can_focus">True</property>
+            <property name="margin_right">26</property>
+            <property name="margin_end">26</property>
+            <property name="input_purpose">number</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">1</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E8">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-right">26</property>
-            <property name="margin-end">26</property>
-            <property name="input-purpose">name</property>
-            <property name="input-hints">GTK_INPUT_HINT_UPPERCASE_CHARS | GTK_INPUT_HINT_NONE</property>
+            <property name="can_focus">True</property>
+            <property name="margin_right">26</property>
+            <property name="margin_end">26</property>
+            <property name="input_purpose">name</property>
+            <property name="input_hints">GTK_INPUT_HINT_UPPERCASE_CHARS | GTK_INPUT_HINT_NONE</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">2</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Categorie du livre    :</property>
             <property name="xalign">0.3499999940395355</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">3</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">3</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E9">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-right">24</property>
-            <property name="margin-end">24</property>
+            <property name="can_focus">True</property>
+            <property name="margin_right">24</property>
+            <property name="margin_end">24</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">3</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">3</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Nom de l'auteur       :</property>
             <property name="xalign">0.3499999940395355</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">4</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">4</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E10">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-right">26</property>
-            <property name="margin-end">26</property>
+            <property name="can_focus">True</property>
+            <property name="margin_right">26</property>
+            <property name="margin_end">26</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">4</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">4</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Prenom de l'auteur :</property>
             <property name="xalign">0.3199999928474426</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">5</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">5</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E11">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-right">26</property>
-            <property name="margin-end">26</property>
+            <property name="can_focus">True</property>
+            <property name="margin_right">26</property>
+            <property name="margin_end">26</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">5</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">5</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">  Numero d'adherant
 Ayant emprunte le livre</property>
             <property name="xalign">0.41999998688697815</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">6</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="E12">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-right">26</property>
-            <property name="margin-end">26</property>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">6</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">6</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="save_book">
             <property name="label" translatable="yes">Save</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-left">124</property>
-            <property name="margin-right">113</property>
-            <property name="margin-start">124</property>
-            <property name="margin-end">113</property>
-            <property name="margin-bottom">16</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_left">124</property>
+            <property name="margin_right">113</property>
+            <property name="margin_start">124</property>
+            <property name="margin_end">113</property>
+            <property name="margin_bottom">16</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">7</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">7</property>
             <property name="width">2</property>
           </packing>
         </child>
         <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
+          <object class="GtkEntry" id="E12">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="margin_right">26</property>
+            <property name="margin_end">26</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">6</property>
+          </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
   <object class="GtkWindow" id="info_window">
     <property name="name">Book's Information</property>
-    <property name="can-focus">False</property>
+    <property name="can_focus">False</property>
     <property name="title" translatable="yes">Book's Info</property>
-    <property name="window-position">center-always</property>
-    <property name="default-width">400</property>
-    <property name="default-height">300</property>
+    <property name="window_position">center-always</property>
+    <property name="default_width">400</property>
+    <property name="default_height">300</property>
     <property name="gravity">center</property>
     <child>
-      <!-- n-columns=3 n-rows=8 -->
       <object class="GtkGrid">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="row-spacing">36</property>
-        <property name="column-homogeneous">True</property>
+        <property name="can_focus">False</property>
+        <property name="row_spacing">36</property>
+        <property name="column_homogeneous">True</property>
         <child>
           <object class="GtkLabel" id="title">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-top">16</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">16</property>
             <property name="label" translatable="yes">ENTER BOOK'S INFORMATION</property>
             <attributes>
               <attribute name="font-desc" value="Ubuntu Light 14"/>
             </attributes>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
             <property name="width">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Numero                        : </property>
             <property name="xalign">0.4099999964237213</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">1</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Title du livre               : </property>
             <property name="xalign">0.3799999952316284</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">2</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E1">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-end">26</property>
+            <property name="can_focus">True</property>
+            <property name="margin_end">26</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">1</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E2">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-end">26</property>
+            <property name="can_focus">True</property>
+            <property name="margin_end">26</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">2</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Categorie du livre    :</property>
             <property name="xalign">0.3499999940395355</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">3</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">3</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E3">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-end">24</property>
+            <property name="can_focus">True</property>
+            <property name="margin_end">24</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">3</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">3</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Nom de l'auteur       :</property>
             <property name="xalign">0.3499999940395355</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">4</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">4</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E4">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-end">26</property>
+            <property name="can_focus">True</property>
+            <property name="margin_end">26</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">4</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">4</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Prenom de l'auteur :</property>
             <property name="xalign">0.3199999928474426</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">5</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">5</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E5">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-end">26</property>
+            <property name="can_focus">True</property>
+            <property name="margin_end">26</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">5</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">5</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">  Numero d'adherant
 Ayant emprunte le livre</property>
             <property name="xalign">0.41999998688697815</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">6</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkEntry" id="E6">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="margin-end">26</property>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">6</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">6</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="save_button">
             <property name="label" translatable="yes">Save</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-start">124</property>
-            <property name="margin-end">113</property>
-            <property name="margin-bottom">16</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">124</property>
+            <property name="margin_end">113</property>
+            <property name="margin_bottom">16</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">7</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">7</property>
             <property name="width">2</property>
           </packing>
         </child>
         <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">-1</property>
+            <property name="xalign">0.4099999964237213</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">6</property>
+          </packing>
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkWindow" id="livre_window">
-    <property name="can-focus">False</property>
+    <property name="can_focus">False</property>
     <property name="title" translatable="yes">LIVRE</property>
-    <property name="window-position">center-always</property>
-    <property name="default-width">500</property>
-    <property name="default-height">600</property>
+    <property name="window_position">center-always</property>
     <property name="gravity">center</property>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">38</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-top">31</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">31</property>
             <property name="label" translatable="yes">Gestion des Livres</property>
             <property name="xalign">0.47999998927116394</property>
             <attributes>
@@ -535,10 +477,10 @@ Ayant emprunte le livre</property>
           <object class="GtkButton" id="btn_add_book">
             <property name="label" translatable="yes">Ajouter</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-start">120</property>
-            <property name="margin-end">120</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -550,10 +492,10 @@ Ayant emprunte le livre</property>
           <object class="GtkButton" id="btn_edit_book">
             <property name="label" translatable="yes">Modifier</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-start">120</property>
-            <property name="margin-end">120</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -565,10 +507,10 @@ Ayant emprunte le livre</property>
           <object class="GtkButton" id="btn_delete_book">
             <property name="label" translatable="yes">Supprimer</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-start">120</property>
-            <property name="margin-end">120</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -580,10 +522,10 @@ Ayant emprunte le livre</property>
           <object class="GtkButton" id="btn_sort">
             <property name="label" translatable="yes">Ordonner par categorie</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-start">120</property>
-            <property name="margin-end">120</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -595,10 +537,10 @@ Ayant emprunte le livre</property>
           <object class="GtkButton" id="btn_search_book">
             <property name="label" translatable="yes">Rechercher</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-start">120</property>
-            <property name="margin-end">120</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -610,10 +552,10 @@ Ayant emprunte le livre</property>
           <object class="GtkButton" id="btn_show_books">
             <property name="label" translatable="yes">Afficher</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-start">120</property>
-            <property name="margin-end">120</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -625,11 +567,11 @@ Ayant emprunte le livre</property>
           <object class="GtkButton" id="btn_return_to_menu">
             <property name="label" translatable="yes">Menu Principale</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-start">120</property>
-            <property name="margin-end">120</property>
-            <property name="margin-bottom">24</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_start">120</property>
+            <property name="margin_end">120</property>
+            <property name="margin_bottom">45</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -639,297 +581,271 @@ Ayant emprunte le livre</property>
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkWindow" id="search_window">
-    <property name="can-focus">False</property>
+    <property name="can_focus">False</property>
     <property name="title" translatable="yes">Search Book</property>
-    <property name="window-position">center-always</property>
+    <property name="window_position">center-always</property>
     <property name="gravity">center</property>
     <child>
-      <!-- n-columns=3 n-rows=3 -->
       <object class="GtkGrid">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
+        <property name="can_focus">False</property>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Titre  : </property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Categorie :</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">1</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E_search1">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
+            <property name="can_focus">True</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">0</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
           </packing>
         </child>
         <child>
           <object class="GtkEntry" id="E_search2">
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
+            <property name="can_focus">True</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">1</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="btn_search">
             <property name="label" translatable="yes">Search</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">2</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">2</property>
             <property name="width">2</property>
           </packing>
         </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
   <object class="GtkWindow" id="show_book_window">
     <property name="name">Book's Information</property>
-    <property name="can-focus">False</property>
+    <property name="can_focus">False</property>
     <property name="title" translatable="yes">Book's Info</property>
-    <property name="window-position">center-always</property>
-    <property name="default-width">400</property>
-    <property name="default-height">300</property>
+    <property name="window_position">center-always</property>
+    <property name="default_width">400</property>
+    <property name="default_height">300</property>
     <property name="gravity">center</property>
     <child>
-      <!-- n-columns=3 n-rows=8 -->
       <object class="GtkGrid">
         <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="row-spacing">36</property>
-        <property name="column-homogeneous">True</property>
+        <property name="can_focus">False</property>
+        <property name="row_spacing">36</property>
+        <property name="column_homogeneous">True</property>
         <child>
           <object class="GtkLabel" id="title2">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-top">16</property>
+            <property name="can_focus">False</property>
+            <property name="margin_top">16</property>
             <property name="label" translatable="yes">BOOK'S INFORMATION</property>
             <attributes>
               <attribute name="font-desc" value="Ubuntu Light 14"/>
             </attributes>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">0</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
             <property name="width">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Numero                        : </property>
             <property name="xalign">0.4099999964237213</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">1</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Title du livre               : </property>
             <property name="xalign">0.3799999952316284</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">2</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Categorie du livre    :</property>
             <property name="xalign">0.3499999940395355</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">3</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">3</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Nom de l'auteur       :</property>
             <property name="xalign">0.3499999940395355</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">4</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">4</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">Prenom de l'auteur :</property>
             <property name="xalign">0.3199999928474426</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">5</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">5</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">  Numero d'adherant
 Ayant emprunte le livre</property>
             <property name="xalign">0.41999998688697815</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">6</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">6</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="return_button">
             <property name="label" translatable="yes">Retour</property>
             <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <property name="margin-left">124</property>
-            <property name="margin-right">113</property>
-            <property name="margin-start">124</property>
-            <property name="margin-end">113</property>
-            <property name="margin-bottom">16</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="margin_left">124</property>
+            <property name="margin_right">113</property>
+            <property name="margin_start">124</property>
+            <property name="margin_end">113</property>
+            <property name="margin_bottom">16</property>
           </object>
           <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">7</property>
+            <property name="left_attach">0</property>
+            <property name="top_attach">7</property>
             <property name="width">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="S_num">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">label</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">1</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="S_titre">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">label</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">2</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">2</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="S_categ">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">label</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">3</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">3</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="S_nom">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">label</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">4</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">4</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="S_prenom">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">label</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">5</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">5</property>
           </packing>
         </child>
         <child>
           <object class="GtkLabel" id="S_empr">
             <property name="visible">True</property>
-            <property name="can-focus">False</property>
+            <property name="can_focus">False</property>
             <property name="label" translatable="yes">label</property>
           </object>
           <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">6</property>
+            <property name="left_attach">1</property>
+            <property name="top_attach">6</property>
           </packing>
         </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
 </interface>

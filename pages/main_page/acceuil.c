@@ -2,7 +2,7 @@
 #include "acceuil.h"
 #include "book.h"
 #include "emprunt.h"
-#include "adherant.h"
+#include "adherent.h"
 
 GtkBuilder *builder;
 
@@ -16,7 +16,7 @@ GtkWidget *btn_quit;
 
 
 void acceuil_init(){
-    builder=gtk_builder_new_from_file("../acceuil.glade");
+    builder=gtk_builder_new_from_file("acceuil.glade");
     start_window=GTK_WIDGET(gtk_builder_get_object (builder,"start_window"));
     btn_livre=GTK_WIDGET(gtk_builder_get_object (builder,"btn_livre"));
     btn_emprunt=GTK_WIDGET(gtk_builder_get_object (builder,"btn_emprunt"));
@@ -32,7 +32,7 @@ void acceuil_init(){
     g_signal_connect (btn_livre, "clicked", G_CALLBACK (hide_acceuil), NULL);
 
     g_signal_connect (btn_adherant, "clicked", G_CALLBACK (adh_window), NULL);
-    g_signal_connect (btn_livre, "clicked", G_CALLBACK (hide_acceuil), NULL);
+    g_signal_connect (btn_adherant, "clicked", G_CALLBACK (hide_acceuil), NULL);
 
     g_signal_connect (btn_quit, "clicked", G_CALLBACK (gtk_main_quit), NULL);
 

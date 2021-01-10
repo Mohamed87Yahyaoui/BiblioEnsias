@@ -39,7 +39,6 @@ GtkWidget *E2;
 GtkWidget *E3;
 GtkWidget *E4;
 GtkWidget *E5;
-GtkWidget *E6;
 
 GtkWidget *E7;
 GtkWidget *E8;
@@ -82,7 +81,7 @@ GtkWidget *save_btn;
 
 void print_book_window(Livre lv){
     char buffer[50];
-    sh_builder=gtk_builder_new_from_file("../livre.glade");
+    sh_builder=gtk_builder_new_from_file("livre.glade");
     sh_window=GTK_WIDGET(gtk_builder_get_object (sh_builder,"show_book_window"));
 
     S_num=GTK_WIDGET(gtk_builder_get_object (sh_builder,"S_num"));
@@ -126,7 +125,7 @@ void rechercher_livre(GtkWidget *widget , gpointer data){
             return ;
         }
     }
-    g_print("no such autor\n");
+    dialog_window("\nno such autor");
 }
 
 int livre_exist(int num){
@@ -162,7 +161,7 @@ void save_book(GtkButton *button,gpointer data){
 
     strcpy(lv.auteur_liv.prenom_aut,gtk_entry_get_text(GTK_ENTRY(E5)));
 
-    lv.emprunteur_liv=atoi(gtk_entry_get_text(GTK_ENTRY(E6)));
+    lv.emprunteur_liv=-1;
 
     // mode ab pour ajouter a la fin du fichier binaire
     FILE *fin=fopen("livre.dat","ab");
@@ -182,7 +181,7 @@ void save_book(GtkButton *button,gpointer data){
 }
 
 void info_window (GtkWidget *widget,gpointer data){
-    b_builder=gtk_builder_new_from_file("../livre.glade");
+    b_builder=gtk_builder_new_from_file("livre.glade");
     i_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"info_window"));
 
     E1=GTK_WIDGET(gtk_builder_get_object (b_builder,"E1"));
@@ -190,7 +189,6 @@ void info_window (GtkWidget *widget,gpointer data){
     E3=GTK_WIDGET(gtk_builder_get_object (b_builder,"E3"));
     E4=GTK_WIDGET(gtk_builder_get_object (b_builder,"E4"));
     E5=GTK_WIDGET(gtk_builder_get_object (b_builder,"E5"));
-    E6=GTK_WIDGET(gtk_builder_get_object (b_builder,"E6"));
 
     save_btn=GTK_WIDGET(gtk_builder_get_object (b_builder,"save_button"));
 
@@ -273,7 +271,7 @@ void setup_tree_view (GtkWidget *treeview){
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
     renderer = gtk_cell_renderer_text_new ();
-    column = gtk_tree_view_column_new_with_attributes("Nombre Emprunteur", renderer, "text", EMPR, NULL);
+    column = gtk_tree_view_column_new_with_attributes("Numero d'Emprunteur", renderer, "text", EMPR, NULL);
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview), column);
 
 }
@@ -312,7 +310,7 @@ void update_book(GtkButton *button,gpointer data){
 }
 
 void edit_book (GtkWidget *widget,gpointer data){
-    b_builder=gtk_builder_new_from_file("../livre.glade");
+    b_builder=gtk_builder_new_from_file("livre.glade");
     i_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"edit_book_window"));
 
     E7=GTK_WIDGET(gtk_builder_get_object (b_builder,"E7"));
@@ -332,7 +330,7 @@ void edit_book (GtkWidget *widget,gpointer data){
 
 
 void delete_book(GtkWidget *widget, gpointer data){
-    d_builder=gtk_builder_new_from_file("../livre.glade");
+    d_builder=gtk_builder_new_from_file("livre.glade");
     d_window=GTK_WIDGET(gtk_builder_get_object(d_builder,"delete_window"));
     btn_delete=GTK_WIDGET(gtk_builder_get_object(d_builder,"btn_delete"));
     E_delete=GTK_WIDGET(gtk_builder_get_object(d_builder,"E_delete"));
@@ -391,7 +389,7 @@ void sort_books(GtkButton *button , gpointer data){
 }
 
 void search_book(GtkWidget *widget , gpointer data){
-    s_builder=gtk_builder_new_from_file("../livre.glade");
+    s_builder=gtk_builder_new_from_file("livre.glade");
     search_window=GTK_WIDGET(gtk_builder_get_object(s_builder,"search_window"));
     E_search1=GTK_WIDGET(gtk_builder_get_object(s_builder,"E_search1"));
     E_search2=GTK_WIDGET(gtk_builder_get_object(s_builder,"E_search2"));
@@ -402,7 +400,7 @@ void search_book(GtkWidget *widget , gpointer data){
 }
 
 void book_window (GtkWidget *widget,gpointer data){
-    b_builder=gtk_builder_new_from_file("../livre.glade");
+    b_builder=gtk_builder_new_from_file("livre.glade");
 
     b_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"livre_window"));
 
