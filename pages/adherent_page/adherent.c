@@ -111,7 +111,7 @@ void save_adh(GtkButton *button,gpointer data){
 
     //adh.nbre_emprunts_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E6adh)));
 
-    adh.nbre_emprunts_adh=-1;
+    adh.nbre_emprunts_adh=0;
 
     // mode ab pour ajouter a la fin du fichier binaire
     FILE *fin=fopen("adherent.dat","ab");
