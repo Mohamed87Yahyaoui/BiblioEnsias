@@ -7,6 +7,7 @@
 void acceuil_init();
 void hide_acceuil();
 void show_acceuil();
+void add_css_class(GtkWidget *,char *);
 
 
 #endif // ACCEUIL_H_INCLUDED

@@ -13,15 +13,20 @@ GtkWidget *btn_adherant;
 GtkWidget *btn_quit;
 
 GtkWidget *btn_quit;
+GtkStyleContext *ctx;
 
 
 void acceuil_init(){
-    builder=gtk_builder_new_from_file("acceuil.glade");
+    
+
+
+    builder=gtk_builder_new_from_file("glade/acceuil.glade");
     start_window=GTK_WIDGET(gtk_builder_get_object (builder,"start_window"));
     btn_livre=GTK_WIDGET(gtk_builder_get_object (builder,"btn_livre"));
     btn_emprunt=GTK_WIDGET(gtk_builder_get_object (builder,"btn_emprunt"));
     btn_adherant=GTK_WIDGET(gtk_builder_get_object (builder,"btn_adherant"));
     btn_quit=GTK_WIDGET(gtk_builder_get_object (builder,"btn_quit"));
+
 
     g_signal_connect(start_window,"destroy",G_CALLBACK(gtk_main_quit),NULL);
 
@@ -63,4 +68,10 @@ void dialog_window(char *message ){
     gtk_dialog_run(GTK_DIALOG(dialog));
     /* Destruction de la boite de message */
     gtk_widget_destroy(dialog);
+}
+
+
+void add_css_class(GtkWidget *Widget,char *class_name){
+    ctx = gtk_widget_get_style_context(GTK_WIDGET(Widget));
+    gtk_style_context_add_class(ctx, class_name);
 }

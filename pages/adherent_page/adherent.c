@@ -19,6 +19,21 @@ GtkWidget *adh_modification_window;
 GtkWidget *adh_modifier_window;
 
 
+GtkBuilder* sh_builder_adh;
+GtkWidget* sh_window_adh;
+GtkWidget* S_nomadh;
+GtkWidget* S_prenomadh;
+GtkWidget* S_numadh;
+GtkWidget* S_email;
+GtkWidget* S_adresse;
+GtkWidget* S_nbliv;
+
+
+
+
+
+
+
 
 GtkWidget *p_window_adh;
 // widget permettant de cree un tableau
@@ -42,6 +57,12 @@ GtkWidget *E3adh;
 GtkWidget *E4adh;
 GtkWidget *E5adh;
 GtkWidget *E6adh;
+GtkWidget *E7adh;
+GtkWidget *E8adh;
+GtkWidget *E9adh;
+GtkWidget *E10adh;
+GtkWidget *E11adh;
+GtkWidget *E12adh;
 GtkWidget *Esupp;
 GtkWidget *Erech;
 GtkWidget *Emodif;
@@ -62,13 +83,14 @@ GtkWidget *btn_return_to_adh_window;
 
 GtkWidget *save_btn_adh;
 
+int num_modif;
 
-int adh_exist(adherent ad){
+int adh_exist(adherent adh){
     adherent temp;
     FILE *pf=fopen("adherent.dat","rb");
     if(!pf) exit(-1);
     while (fread(&temp,sizeof(adherent),1,pf)==1){
-        if(temp.num_adh==ad.num_adh) return 1;
+        if(temp.num_adh==adh.num_adh) return 1;
     }
     fclose(pf);
     return 0;
@@ -87,7 +109,9 @@ void save_adh(GtkButton *button,gpointer data){
 
     strcpy(adh.adress_adh,gtk_entry_get_text(GTK_ENTRY(E5adh)));
 
-    adh.nbre_emprunts_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E6adh)));
+    //adh.nbre_emprunts_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E6adh)));
+
+    adh.nbre_emprunts_adh=-1;
 
     // mode ab pour ajouter a la fin du fichier binaire
     FILE *fin=fopen("adherent.dat","ab");
@@ -105,7 +129,7 @@ void save_adh(GtkButton *button,gpointer data){
 }
 
 void adh_info_window (GtkWidget *widget,gpointer data){
-    a_builder=gtk_builder_new_from_file("adherent.glade");
+    a_builder=gtk_builder_new_from_file("glade/adherent.glade");
     adh_i_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_info_window"));
 
     E1adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E1adh"));
@@ -113,7 +137,7 @@ void adh_info_window (GtkWidget *widget,gpointer data){
     E3adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E3adh"));
     E4adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E4adh"));
     E5adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E5adh"));
-    E6adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E6adh"));
+    //E6adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E6adh"));
 
 
     save_btn_adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"save_button_adh"));
@@ -158,10 +182,9 @@ void delete_adh(GtkButton *button,gpointer data)
             fwrite(&adh1, sizeof(adherent), 1, fin);
         }
         dialog_window("Suppression reussie");
-        fclose(ftemp);
     }else dialog_window("adherent n existe pas !");
     fclose(fin);
-
+    fclose(ftemp);
     gtk_window_close(GTK_WINDOW(adh_supprimer_window));
 }
 
@@ -169,7 +192,7 @@ void delete_adh(GtkButton *button,gpointer data)
 
 void adh_supp_window(GtkWidget *widget, gpointer data)
 {
-    a_builder=gtk_builder_new_from_file("supprimer_adh.glade");
+    a_builder=gtk_builder_new_from_file("glade/adherent.glade");
     adh_supprimer_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_supp_window"));
 
     Esupp=GTK_WIDGET(gtk_builder_get_object (a_builder,"Esupp"));
@@ -178,117 +201,85 @@ void adh_supp_window(GtkWidget *widget, gpointer data)
     g_signal_connect(conf_delete_adh, "clicked", G_CALLBACK (delete_adh), Esupp);
     g_signal_connect(conf_delete_adh, "clicked", G_CALLBACK (show_adh_window), NULL);
 
-    gtk_widget_show_all(adh_supprimer_window);
+    gtk_widget_show_all(adh_supprimer_window);//it works
 
 }
 
 void adh_rech_window(GtkWidget *widget, gpointer data)
 {
-    a_builder=gtk_builder_new_from_file("rechercher_adh.glade");
+    a_builder=gtk_builder_new_from_file("glade/adherent.glade");
     adh_rechercher_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_rech_window"));
 
     Erech=GTK_WIDGET(gtk_builder_get_object (a_builder,"Erech"));
     conf_rech_adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"conf_rech_adh"));
 
-    g_signal_connect(conf_rech_adh, "clicked", G_CALLBACK (rech_adh), Erech);
+    g_signal_connect(conf_rech_adh, "clicked", G_CALLBACK (rechercher_adherent), Erech);
     g_signal_connect(conf_rech_adh, "clicked", G_CALLBACK (show_adh_window), NULL);
 
     gtk_widget_show_all(adh_rechercher_window);
 }
 
-/*
-void rech_adh(GtkButton * widget,gpointer data)
-{
+void rechercher_adherent(GtkWidget *widget , gpointer data){
+
     adherent adh1;
-    adherent adh2;
-
-    E1adh=Esupp;
     adh1.num_adh=atoi(gtk_entry_get_text(GTK_ENTRY(Erech)));
+    printf("%d\n",adh1.num_adh);
+    printf("%d\n",adh_exist(adh1));
+    int test=adh_exist(adh1);
+    if(test==1)
+    {
+        FILE* f=fopen("adherent.dat","rb");
 
-    FILE *fin=fopen("adherent.dat","rb");
-    if(!fin) {
-        printf("cannot open file \n");
-        exit(-1);
-    }
-    if(adh_exist(adh1)){
-        while(fread(&adh2, sizeof(adherent), 1, fin))
+        adherent ad;
+        while(fread(&ad,sizeof(adherent),1,f))
         {
-            if(adh2.num_adh!=adh1.num_adh)
+
+            if(adh1.num_adh==ad.num_adh)
             {
-                break;
+
+                print_adh_window(ad);
             }
         }
-        fclose(fin);
-        print_adh()
-    }else dialog_window("adherent n existe pas !");
-    fclose(fin);
-    fclose(ftemp);
-    gtk_window_close(GTK_WINDOW(adh_rechercher_window));
-}
-*/
-
-
-
-
-void rech_adh(GtkWidget *button , gpointer data){
-
-    adherent adh1;
-    p_window_adh = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_title (GTK_WINDOW (p_window_adh), "Adherent");
-    gtk_container_set_border_width (GTK_CONTAINER (p_window_adh), 10);
-    gtk_widget_set_size_request (p_window_adh, 600, 450);
-    E1adh=Erech;
-    adh1.num_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E1adh)));
-
-    if(adh_exist(adh1))
-    {
-        treeview_adh = gtk_tree_view_new ();
-        setup_tree_view_adh (treeview_adh);
-        /* Create a new tree model with six columns, as 2 gint and 4 strings */
-        store_adh = gtk_list_store_new (COLUMNSadh,
-        G_TYPE_INT,
-        G_TYPE_STRING ,
-        G_TYPE_STRING ,
-        G_TYPE_STRING ,
-        G_TYPE_STRING ,
-        G_TYPE_INT);
-
-
-        // Add all of the products to the GtkListStore.
-        FILE *fpadh=fopen("adherent.dat","rb");
-        adherent ad;
-        while (fread(&ad,sizeof(adherent),1,fpadh)==1){
-                if(ad.num_adh==adh1.num_adh)
-                {
-                    gtk_list_store_append (store_adh, &iter_adh);
-                    gtk_list_store_set (store_adh, &iter_adh,
-                    NUMadh, ad.num_adh ,
-                    NOMadh, ad.nom_adh,
-                    PRENOMadh, ad.prenom_adh,
-                    EMAIL,ad.email_adh,
-                    ADRESSE,ad.adress_adh,
-                    NB_EMPR,ad.nbre_emprunts_adh,
-                    -1);
-
-                    /* Add the tree model to the tree view and unreference it so that the model will
-                    * be destroyed along with the tree view. */
-                    gtk_tree_view_set_model (GTK_TREE_VIEW (treeview_adh), GTK_TREE_MODEL (store_adh));
-                    g_object_unref (store_adh);
-                    // Add scrole feature
-                    scrolled_win_adh = gtk_scrolled_window_new (NULL, NULL);
-                    gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win_adh),GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-
-                    gtk_container_add (GTK_CONTAINER (scrolled_win_adh), treeview_adh);
-                    gtk_container_add (GTK_CONTAINER (p_window_adh), scrolled_win_adh);
-                    gtk_widget_show_all (p_window_adh);
-                }
-
-         }
     }
-    else dialog_window("adherent introuvable");
+    else
+    {
+        dialog_window("adherent innexistant");
+    }
 
-    gtk_widget_show_all(adh_rechercher_window);
 }
+
+
+
+void print_adh_window(adherent ad){
+    char buffer[50];
+    sh_builder_adh=gtk_builder_new_from_file("glade/adherent.glade");
+    sh_window_adh=GTK_WIDGET(gtk_builder_get_object (sh_builder_adh,"show_adherent_window"));
+
+    S_numadh=GTK_WIDGET(gtk_builder_get_object (sh_builder_adh,"S_num"));
+    S_nomadh=GTK_WIDGET(gtk_builder_get_object (sh_builder_adh,"S_nom"));
+    S_prenomadh=GTK_WIDGET(gtk_builder_get_object (sh_builder_adh,"S_prenom"));
+    S_email=GTK_WIDGET(gtk_builder_get_object (sh_builder_adh,"S_email"));
+    S_adresse=GTK_WIDGET(gtk_builder_get_object (sh_builder_adh,"S_adresse"));
+    S_nbliv=GTK_WIDGET(gtk_builder_get_object (sh_builder_adh,"S_nbliv"));
+    // sprintf pour ecrire dans buffer(de type string)
+    sprintf(buffer,"%d",ad.num_adh);
+    gtk_label_set_text(GTK_LABEL(S_numadh),buffer);
+    gtk_label_set_text(GTK_LABEL(S_nomadh),ad.nom_adh);
+    gtk_label_set_text(GTK_LABEL(S_prenomadh),ad.prenom_adh);
+    gtk_label_set_text(GTK_LABEL(S_email),ad.email_adh);
+    gtk_label_set_text(GTK_LABEL(S_adresse),ad.adress_adh);
+    sprintf(buffer,"%d",ad.nbre_emprunts_adh);
+    gtk_label_set_text(GTK_LABEL(S_nbliv),buffer);
+
+    //btn_retour=GTK_WIDGET(gtk_builder_get_object (sh_builder,"return_button"));
+
+    //g_signal_connect(btn_retour,"clicked",G_CALLBACK (hide_sh),NULL);
+
+    gtk_widget_show_all(sh_window_adh);
+}
+
+
+
 
 
 
@@ -297,7 +288,7 @@ void rech_adh(GtkWidget *button , gpointer data){
 
 
 void adh_window (GtkWidget *widget,gpointer data){
-    a_builder=gtk_builder_new_from_file("gestion_adherents.glade");
+    a_builder=gtk_builder_new_from_file("glade/adherent.glade");
 
     a_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_window"));
 
@@ -401,15 +392,13 @@ void setup_tree_view_adh (GtkWidget *treeview_adh){
 
 }
 
-
 void adh_modif_window(GtkWidget *widget, gpointer data)
 {
-    a_builder=gtk_builder_new_from_file("modif_adh_conf.glade");
+    a_builder=gtk_builder_new_from_file("glade/adherent.glade");
     adh_modifier_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"modif_adh_conf"));
 
     Emodif=GTK_WIDGET(gtk_builder_get_object (a_builder,"Emodif"));
     conf1_modif_adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"conf1_modif_adh"));
-
 
 
     g_signal_connect(conf1_modif_adh, "clicked", G_CALLBACK (adh_conf_modif_window), NULL);
@@ -421,27 +410,23 @@ void adh_modif_window(GtkWidget *widget, gpointer data)
 void adh_conf_modif_window(GtkWidget *widget, gpointer data)
 {
     adherent adh1;
-
-    E1adh=Emodif;
-    adh1.num_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E1adh)));
-
+    num_modif=atoi(gtk_entry_get_text(GTK_ENTRY(Emodif)));
+    adh1.num_adh=num_modif;
     FILE *fin=fopen("adherent.dat","rb");
     if(!fin) {
         printf("cannot open file \n");
         exit(-1);
     }
-    if(adh_exist(adh1))
-    {
-        fclose(fin);
-        a_builder=gtk_builder_new_from_file("modif_adh.glade");
+    if(adh_exist(adh1)){
+        a_builder=gtk_builder_new_from_file("glade/adherent.glade");
         adh_modification_window=GTK_WIDGET(gtk_builder_get_object (a_builder,"adh_modif_window"));
 
 
-        E2adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E2adh"));
-        E3adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E3adh"));
-        E4adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E4adh"));
-        E5adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E5adh"));
-        E6adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E6adh"));
+        E8adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E8adh"));
+        E9adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E9adh"));
+        E10adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E10adh"));
+        E11adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E11adh"));
+        E12adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"E12adh"));
 
 
         valider_modification_adh=GTK_WIDGET(gtk_builder_get_object (a_builder,"validemodif_button_adh"));
@@ -454,24 +439,24 @@ void adh_conf_modif_window(GtkWidget *widget, gpointer data)
     }
     else dialog_window("adherent n existe pas !");
     fclose(fin);
-    //gtk_widget_show_all(adh_modifier_window);
+    gtk_widget_show_all(adh_modifier_window);
 }
 
 void modif_adh(GtkButton * button, gpointer data)
 {
     adherent adh,adh1;
 
-    adh.num_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E1adh)));
+    adh.num_adh=num_modif;
 
-    strcpy(adh.nom_adh,gtk_entry_get_text(GTK_ENTRY(E2adh)));
+    strcpy(adh.nom_adh,gtk_entry_get_text(GTK_ENTRY(E8adh)));
 
-    strcpy(adh.prenom_adh,gtk_entry_get_text(GTK_ENTRY(E3adh)));
+    strcpy(adh.prenom_adh,gtk_entry_get_text(GTK_ENTRY(E9adh)));
 
-    strcpy(adh.email_adh,gtk_entry_get_text(GTK_ENTRY(E4adh)));
+    strcpy(adh.email_adh,gtk_entry_get_text(GTK_ENTRY(E10adh)));
 
-    strcpy(adh.adress_adh,gtk_entry_get_text(GTK_ENTRY(E5adh)));
+    strcpy(adh.adress_adh,gtk_entry_get_text(GTK_ENTRY(E11adh)));
 
-    adh.nbre_emprunts_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E6adh)));
+    adh.nbre_emprunts_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E12adh)));
 
     // mode ab pour ajouter a la fin du fichier binaire
     FILE *fin=fopen("adherent.dat","r+b");
@@ -486,7 +471,7 @@ void modif_adh(GtkButton * button, gpointer data)
         {
             if(adh1.num_adh==adh.num_adh)
             {
-                long long unsigned int dep =-1*sizeof(adherent);
+                 long long unsigned int dep =-1*sizeof(adherent);
                  fseek(fin,dep,SEEK_CUR);
                  if(fwrite(&adh,sizeof(adherent),1,fin)==1)
                  {
@@ -499,6 +484,7 @@ void modif_adh(GtkButton * button, gpointer data)
                  break;
             }
         }
+        fclose(fin);
     }
     gtk_window_close(GTK_WINDOW(adh_modification_window));
 }
@@ -517,6 +503,7 @@ void close_adh_return_to_menu(){
     gtk_window_close(GTK_WINDOW(a_window));
     show_acceuil();
 }
+
 
 
 

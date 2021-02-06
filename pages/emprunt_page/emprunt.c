@@ -21,7 +21,7 @@ GtkWidget *E_adh;
 GtkWidget *btn_empr;
 
 void emprunt_window(GtkWidget *widget , gpointer data){
-    e_builder=gtk_builder_new_from_file("emprunt.glade");
+    e_builder=gtk_builder_new_from_file("glade/emprunt.glade");
 
     e_window=GTK_WIDGET(gtk_builder_get_object (e_builder,"emprunt_window"));
 
@@ -40,7 +40,7 @@ void emprunt_window(GtkWidget *widget , gpointer data){
     gtk_widget_show_all(e_window);
 }
 void emprunter_window(GtkWidget *widget , gpointer data){
-    r_builder=gtk_builder_new_from_file("emprunt.glade");
+    r_builder=gtk_builder_new_from_file("glade/emprunt.glade");
     empr_window=GTK_WIDGET(gtk_builder_get_object(r_builder,"emprunter_window"));
     E_num=GTK_WIDGET(gtk_builder_get_object(r_builder,"E_num"));
     E_adh=GTK_WIDGET(gtk_builder_get_object(r_builder,"E_adh"));

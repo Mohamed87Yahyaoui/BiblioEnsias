@@ -2,6 +2,8 @@
 #include<stdlib.h>
 #include "book.h"
 
+
+
 //builers
 GtkBuilder *b_builder;
 GtkBuilder *d_builder;
@@ -20,6 +22,8 @@ GtkWidget *search_window;
 GtkWidget *d_window;
 // widget permettant de cree un tableau
 GtkWidget *sh_window;
+
+GtkWidget *prei_window;
 
 GtkWidget *treeview;
 // widget pour ajouter l'option du scroll
@@ -51,6 +55,8 @@ GtkWidget *E_delete;
 GtkWidget *E_search1;
 GtkWidget *E_search2;
 
+GtkWidget *entry_num;
+
 //Sortie
 GtkWidget *S_num;
 GtkWidget *S_nom;
@@ -75,13 +81,14 @@ GtkWidget *btn_search;
 GtkWidget *btn_retour;
 GtkWidget *dialog;
 GtkWidget *save_btn;
+GtkWidget *search_num_btn;
 
-
-
+int edit_num;
+GtkWidget *num_label;
 
 void print_book_window(Livre lv){
     char buffer[50];
-    sh_builder=gtk_builder_new_from_file("livre.glade");
+    sh_builder=gtk_builder_new_from_file("glade/livre.glade");
     sh_window=GTK_WIDGET(gtk_builder_get_object (sh_builder,"show_book_window"));
 
     S_num=GTK_WIDGET(gtk_builder_get_object (sh_builder,"S_num"));
@@ -181,7 +188,7 @@ void save_book(GtkButton *button,gpointer data){
 }
 
 void info_window (GtkWidget *widget,gpointer data){
-    b_builder=gtk_builder_new_from_file("livre.glade");
+    b_builder=gtk_builder_new_from_file("glade/livre.glade");
     i_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"info_window"));
 
     E1=GTK_WIDGET(gtk_builder_get_object (b_builder,"E1"));
@@ -279,7 +286,7 @@ void setup_tree_view (GtkWidget *treeview){
 void update_book(GtkButton *button,gpointer data){
     Livre lv;
 
-    lv.num_liv=atoi(gtk_entry_get_text(GTK_ENTRY(E7)));
+    lv.num_liv=edit_num;
     strcpy(lv.titre_liv,gtk_entry_get_text(GTK_ENTRY(E8)));
     strcpy(lv.categ_liv,gtk_entry_get_text(GTK_ENTRY(E9)));
     strcpy(lv.auteur_liv.nom_aut,gtk_entry_get_text(GTK_ENTRY(E10)));
@@ -310,27 +317,41 @@ void update_book(GtkButton *button,gpointer data){
 }
 
 void edit_book (GtkWidget *widget,gpointer data){
-    b_builder=gtk_builder_new_from_file("livre.glade");
-    i_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"edit_book_window"));
+    b_builder=gtk_builder_new_from_file("glade/livre.glade");
+    edit_num=atoi(gtk_entry_get_text(GTK_ENTRY(entry_num)));
+    if(!livre_exist(edit_num)){
+        dialog_window("\nlivre non existant !");
+    }else {
+        i_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"edit_book_window"));
+        char temp[50];
+        num_label=GTK_WIDGET(gtk_builder_get_object (b_builder,"num_label"));
+        sprintf(temp, "%d", edit_num); 
+        gtk_label_set_text(GTK_LABEL(num_label),temp);
+        E8=GTK_WIDGET(gtk_builder_get_object (b_builder,"E8"));
+        E9=GTK_WIDGET(gtk_builder_get_object (b_builder,"E9"));
+        E10=GTK_WIDGET(gtk_builder_get_object (b_builder,"E10"));
+        E11=GTK_WIDGET(gtk_builder_get_object (b_builder,"E11"));
+        E12=GTK_WIDGET(gtk_builder_get_object (b_builder,"E12"));
 
-    E7=GTK_WIDGET(gtk_builder_get_object (b_builder,"E7"));
-    E8=GTK_WIDGET(gtk_builder_get_object (b_builder,"E8"));
-    E9=GTK_WIDGET(gtk_builder_get_object (b_builder,"E9"));
-    E10=GTK_WIDGET(gtk_builder_get_object (b_builder,"E10"));
-    E11=GTK_WIDGET(gtk_builder_get_object (b_builder,"E11"));
-    E12=GTK_WIDGET(gtk_builder_get_object (b_builder,"E12"));
+        save_btn=GTK_WIDGET(gtk_builder_get_object (b_builder,"save_book"));
 
-    save_btn=GTK_WIDGET(gtk_builder_get_object (b_builder,"save_book"));
-
-    g_signal_connect(save_btn,"clicked",G_CALLBACK (update_book),NULL);
-    //g_signal_connect(save_btn,"clicked",G_CALLBACK (show_book_window),NULL);
-
-    gtk_widget_show_all(i_window);
+        g_signal_connect(save_btn,"clicked",G_CALLBACK (update_book),NULL);
+        //g_signal_connect(save_btn,"clicked",G_CALLBACK (show_book_window),NULL);
+        gtk_widget_show_all(i_window);
+    }
+    gtk_widget_destroy(prei_window);
+}
+void pre_edit_book(GtkWidget*widget,gpointer data){
+    b_builder=gtk_builder_new_from_file("glade/livre.glade");
+    prei_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"pre_edit_book_window"));
+    entry_num=GTK_WIDGET(gtk_builder_get_object (b_builder,"entry_num"));
+    search_num_btn=GTK_WIDGET(gtk_builder_get_object (b_builder,"search_num"));
+    g_signal_connect(search_num_btn,"clicked",G_CALLBACK (edit_book),NULL);
+    gtk_widget_show_all(prei_window);
 }
 
-
 void delete_book(GtkWidget *widget, gpointer data){
-    d_builder=gtk_builder_new_from_file("livre.glade");
+    d_builder=gtk_builder_new_from_file("glade/livre.glade");
     d_window=GTK_WIDGET(gtk_builder_get_object(d_builder,"delete_window"));
     btn_delete=GTK_WIDGET(gtk_builder_get_object(d_builder,"btn_delete"));
     E_delete=GTK_WIDGET(gtk_builder_get_object(d_builder,"E_delete"));
@@ -389,7 +410,7 @@ void sort_books(GtkButton *button , gpointer data){
 }
 
 void search_book(GtkWidget *widget , gpointer data){
-    s_builder=gtk_builder_new_from_file("livre.glade");
+    s_builder=gtk_builder_new_from_file("glade/livre.glade");
     search_window=GTK_WIDGET(gtk_builder_get_object(s_builder,"search_window"));
     E_search1=GTK_WIDGET(gtk_builder_get_object(s_builder,"E_search1"));
     E_search2=GTK_WIDGET(gtk_builder_get_object(s_builder,"E_search2"));
@@ -400,7 +421,7 @@ void search_book(GtkWidget *widget , gpointer data){
 }
 
 void book_window (GtkWidget *widget,gpointer data){
-    b_builder=gtk_builder_new_from_file("livre.glade");
+    b_builder=gtk_builder_new_from_file("glade/livre.glade");
 
     b_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"livre_window"));
 
@@ -415,7 +436,7 @@ void book_window (GtkWidget *widget,gpointer data){
     g_signal_connect(btn_add_book,"clicked",G_CALLBACK(info_window),NULL);
     g_signal_connect(btn_return_to_menu,"clicked",G_CALLBACK(close_book_return_to_menu),NULL);
     g_signal_connect(btn_show_books,"clicked",G_CALLBACK(print_books),NULL);
-    g_signal_connect(btn_edit_book,"clicked",G_CALLBACK(edit_book),NULL);
+    g_signal_connect(btn_edit_book,"clicked",G_CALLBACK(pre_edit_book),NULL);
     g_signal_connect(btn_delete_book,"clicked",G_CALLBACK(delete_book),NULL);
     g_signal_connect(btn_sort,"clicked",G_CALLBACK(sort_books),NULL);
     g_signal_connect(btn_search_book,"clicked",G_CALLBACK(search_book),NULL);

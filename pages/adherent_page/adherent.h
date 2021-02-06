@@ -38,6 +38,8 @@ void hide_adh_window();
 void show_adh_window();
 void close_adh_return_to_menu();
 void dialog_window(char *);
+void rechercher_adherent(GtkWidget *widget , gpointer data);
+void print_adh_window(adherent ad);
 
 
 void setup_tree_view_adh (GtkWidget *);
