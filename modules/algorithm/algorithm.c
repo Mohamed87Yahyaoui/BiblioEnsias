@@ -1,3 +1,4 @@
+#include<stdlib.h>
 #include "book.h"
 #include "adherent.h"
 #include "algorithm.h"
