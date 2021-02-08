@@ -54,16 +54,14 @@ run this command **_sudo apt install libgtk-3-dev_** and you're good to go :D (a
 
 - Open the command line and cd to the project's directory
 - Run the following commands: 
-  - mkdir build 
-  - cd build 
-  - cmake -DCMAKE_C_COMPILER="gcc.exe" -DCMAKE_CXX_COMPILER="g++.exe" -G "CodeBlocks - MinGW Makefiles" ..
+  - cmake -DCMAKE_C_COMPILER="gcc.exe" -DCMAKE_CXX_COMPILER="g++.exe" -G "CodeBlocks - MinGW Makefiles" .
 - Those last steps will generate a codeblocks project
-- Open tic_tac_toe.cbp using CodeBlocks
+- Open BIBLIOENSIAS.cbp using CodeBlocks
 - Go to Project > Properties > Build targets 
   - And change Type to GUI application 
   - Click OK 
   - Build the project
-- Now you can run the application found in build directory named tic_tac_toe.exe
+- Now you can run the application found in build directory named BIBLIOENSIAS.exe
 
 ## On Linux
 
