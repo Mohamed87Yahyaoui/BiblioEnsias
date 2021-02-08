@@ -12,4 +12,7 @@ void emprunt_window(GtkWidget * , gpointer );
 void close_empr_return_to_menu();
 void show_acceuil();
 
+void print_books_emprunte(GtkWidget * , gpointer );
+void rech_adh_liv(GtkWidget * , gpointer);
+
 #endif

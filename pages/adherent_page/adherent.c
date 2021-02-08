@@ -223,10 +223,7 @@ void rechercher_adherent(GtkWidget *widget , gpointer data){
 
     adherent adh1;
     adh1.num_adh=atoi(gtk_entry_get_text(GTK_ENTRY(Erech)));
-    printf("%d\n",adh1.num_adh);
-    printf("%d\n",adh_exist(adh1));
-    int test=adh_exist(adh1);
-    if(test==1)
+    if(adh_exist(adh1))
     {
         FILE* f=fopen("adherent.dat","rb");
 
@@ -387,7 +384,7 @@ void setup_tree_view_adh (GtkWidget *treeview_adh){
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview_adh), column_adh);
 
     renderer_adh = gtk_cell_renderer_text_new ();
-    column_adh = gtk_tree_view_column_new_with_attributes("Nombre de libre empruntes", renderer_adh, "text", NB_EMPR, NULL);
+    column_adh = gtk_tree_view_column_new_with_attributes("Nombre de livre empruntes", renderer_adh, "text", NB_EMPR, NULL);
     gtk_tree_view_append_column (GTK_TREE_VIEW (treeview_adh), column_adh);
 
 }
@@ -466,7 +463,6 @@ void modif_adh(GtkButton * button, gpointer data)
     }
     else
     {
-        printf("%s\n",adh.nom_adh);
         while(fread(&adh1, sizeof(adherent), 1, fin))
         {
             if(adh1.num_adh==adh.num_adh)

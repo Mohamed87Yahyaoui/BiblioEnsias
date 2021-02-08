@@ -1,7 +1,7 @@
 #include<gtk/gtk.h>
 #include<stdlib.h>
 #include "book.h"
-
+#include "book_algorithm.h"
 
 
 //builers
@@ -116,31 +116,15 @@ void print_book_window(Livre lv){
 void rechercher_livre(GtkWidget *widget , gpointer data){
     const char *titre=gtk_entry_get_text(GTK_ENTRY(E_search1));
     const char *categorie=gtk_entry_get_text(GTK_ENTRY(E_search2));
-    /*
-    for (int i = 0; i < strlen(titre); i++){
-        titre[i]=toupper(titre[i]);
-    }
-    for (int i = 0; i < strlen(titre); i++){
-        categorie[i]=toupper(categorie[i]);
-    }
-    */
-    FILE *fp=fopen("livre.dat","rb");
-    Livre temp;
-    while (fread(&temp,sizeof(Livre),1,fp)==1){
-        if(!strcmp(temp.titre_liv,titre) && !strcmp(temp.categ_liv,categorie) ){
-            print_book_window(temp);
-            return ;
-        }
-    }
-    dialog_window("\nno such autor");
+    rechercher_livre_algo(titre,categorie);
 }
 
 int livre_exist(int num){
-    Livre temp;
+    Livre *temp=(Livre *)malloc(sizeof(Livre));
     FILE *pf=fopen("livre.dat","rb");
     if(!pf) exit(-1);
     while (fread(&temp,sizeof(Livre),1,pf)==1){
-        if(temp.num_liv==num) return 1;
+        if(temp->num_liv==num) return 1;
     }
     fclose(pf);
     return 0;
@@ -154,16 +138,7 @@ void save_book(GtkButton *button,gpointer data){
     strcpy(lv.titre_liv,gtk_entry_get_text(GTK_ENTRY(E2)));
 
     strcpy(lv.categ_liv,gtk_entry_get_text(GTK_ENTRY(E3)));
-/*
-    for (int i = 0; i < strlen(lv.titre_liv); i++){
-        lv.titre_liv[i]=toupper(lv.titre_liv[i]);
-    }
-
-    for (int i = 0; i < strlen(lv.categ_liv); i++){
-        lv.categ_liv[i]=toupper(lv.categ_liv[i]);
-    }
-
- */
+ 
     strcpy(lv.auteur_liv.nom_aut,gtk_entry_get_text(GTK_ENTRY(E4)));
 
     strcpy(lv.auteur_liv.prenom_aut,gtk_entry_get_text(GTK_ENTRY(E5)));
@@ -332,6 +307,7 @@ void edit_book (GtkWidget *widget,gpointer data){
         E10=GTK_WIDGET(gtk_builder_get_object (b_builder,"E10"));
         E11=GTK_WIDGET(gtk_builder_get_object (b_builder,"E11"));
         E12=GTK_WIDGET(gtk_builder_get_object (b_builder,"E12"));
+        gtk_entry_set_text (GTK_ENTRY(E8),"blablabla");
 
         save_btn=GTK_WIDGET(gtk_builder_get_object (b_builder,"save_book"));
 
@@ -341,6 +317,8 @@ void edit_book (GtkWidget *widget,gpointer data){
     }
     gtk_widget_destroy(prei_window);
 }
+
+
 void pre_edit_book(GtkWidget*widget,gpointer data){
     b_builder=gtk_builder_new_from_file("glade/livre.glade");
     prei_window=GTK_WIDGET(gtk_builder_get_object (b_builder,"pre_edit_book_window"));

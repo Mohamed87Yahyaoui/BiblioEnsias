@@ -3,6 +3,8 @@
 }
 
 window{
+    /*background-image: url("bg.png");
+    background-size: cover;*/
     background-color: #2a2b30;
     color : white;
 }
