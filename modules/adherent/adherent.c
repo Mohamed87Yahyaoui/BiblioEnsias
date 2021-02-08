@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 #include <stdlib.h>
 #include "adherent.h"
+#include "algorithm.h"
 
 
 GtkBuilder *a_builder;
@@ -109,22 +110,10 @@ void save_adh(GtkButton *button,gpointer data){
 
     strcpy(adh.adress_adh,gtk_entry_get_text(GTK_ENTRY(E5adh)));
 
-    //adh.nbre_emprunts_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E6adh)));
-
     adh.nbre_emprunts_adh=0;
 
-    // mode ab pour ajouter a la fin du fichier binaire
-    FILE *fin=fopen("adherent.dat","ab");
-    if(!fin) {
-        printf("cannot open file \n");
-        exit(-1);
-    }
-    if(!adh_exist(adh)){
-        //ecriture
-        fwrite(&adh,sizeof(adherent),1,fin);
-        dialog_window("Adherent est ajoute avec succes");
-    }else dialog_window("adherent deja exist !");
-    fclose(fin);
+    ajouter_adherent_algo(adh);
+
     gtk_window_close(GTK_WINDOW(adh_i_window));
 }
 
@@ -152,39 +141,10 @@ void adh_info_window (GtkWidget *widget,gpointer data){
 
 void delete_adh(GtkButton *button,gpointer data)
 {
-    FILE* ftemp;
-    adherent adh1;
-    adherent adh2;
+    int num=atoi(gtk_entry_get_text(GTK_ENTRY(Esupp)));
 
-    E1adh=Esupp;
-    adh1.num_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E1adh)));
+    supprimer_adherent_algo(num);
 
-    FILE *fin=fopen("adherent.dat","rb");
-    if(!fin) {
-        printf("cannot open file \n");
-        exit(-1);
-    }
-    if(adh_exist(adh1)){
-        ftemp=fopen("adherenttemp.dat","w+b");
-        while(fread(&adh2, sizeof(adherent), 1, fin))
-        {
-            if(adh2.num_adh!=adh1.num_adh)
-            {
-                fwrite(&adh2, sizeof(adherent), 1, ftemp);
-            }
-        }
-        fclose(fin);
-        fclose(ftemp);
-        ftemp=fopen("adherenttemp.dat","rb");
-        fin=fopen("adherent.dat","w+b");
-        while(fread(&adh1, sizeof(adherent), 1, ftemp))
-        {
-            fwrite(&adh1, sizeof(adherent), 1, fin);
-        }
-        dialog_window("Suppression reussie");
-    }else dialog_window("adherent n existe pas !");
-    fclose(fin);
-    fclose(ftemp);
     gtk_window_close(GTK_WINDOW(adh_supprimer_window));
 }
 
@@ -220,31 +180,9 @@ void adh_rech_window(GtkWidget *widget, gpointer data)
 }
 
 void rechercher_adherent(GtkWidget *widget , gpointer data){
-
-    adherent adh1;
-    adh1.num_adh=atoi(gtk_entry_get_text(GTK_ENTRY(Erech)));
-    if(adh_exist(adh1))
-    {
-        FILE* f=fopen("adherent.dat","rb");
-
-        adherent ad;
-        while(fread(&ad,sizeof(adherent),1,f))
-        {
-
-            if(adh1.num_adh==ad.num_adh)
-            {
-
-                print_adh_window(ad);
-            }
-        }
-    }
-    else
-    {
-        dialog_window("adherent innexistant");
-    }
-
+    const char *name=gtk_entry_get_text(GTK_ENTRY(Erech));
+    rechercher_adherent_algo(name);
 }
-
 
 
 void print_adh_window(adherent ad){
@@ -314,7 +252,7 @@ void print_adhs(GtkWidget *button , gpointer data){
     p_window_adh = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title (GTK_WINDOW (p_window_adh), "Liste des adherents");
     gtk_container_set_border_width (GTK_CONTAINER (p_window_adh), 10);
-    gtk_widget_set_size_request (p_window_adh, 600, 450);
+    gtk_widget_set_size_request (p_window_adh, 900, 450);
 
     treeview_adh = gtk_tree_view_new ();
     setup_tree_view_adh (treeview_adh);
@@ -441,7 +379,7 @@ void adh_conf_modif_window(GtkWidget *widget, gpointer data)
 
 void modif_adh(GtkButton * button, gpointer data)
 {
-    adherent adh,adh1;
+    adherent adh;
 
     adh.num_adh=num_modif;
 
@@ -455,33 +393,8 @@ void modif_adh(GtkButton * button, gpointer data)
 
     adh.nbre_emprunts_adh=atoi(gtk_entry_get_text(GTK_ENTRY(E12adh)));
 
-    // mode ab pour ajouter a la fin du fichier binaire
-    FILE *fin=fopen("adherent.dat","r+b");
-    if(!fin) {
-        printf("cannot open file \n");
-        exit(-1);
-    }
-    else
-    {
-        while(fread(&adh1, sizeof(adherent), 1, fin))
-        {
-            if(adh1.num_adh==adh.num_adh)
-            {
-                 long long unsigned int dep =-1*sizeof(adherent);
-                 fseek(fin,dep,SEEK_CUR);
-                 if(fwrite(&adh,sizeof(adherent),1,fin)==1)
-                 {
-                     dialog_window("Adherent mis a jour!");
-                 }
-                 else
-                 {
-                     dialog_window("Erreur de modification!");
-                 }
-                 break;
-            }
-        }
-        fclose(fin);
-    }
+    modifier_adherent_algo(adh);
+
     gtk_window_close(GTK_WINDOW(adh_modification_window));
 }
 

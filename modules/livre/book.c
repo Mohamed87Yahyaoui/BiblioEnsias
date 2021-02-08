@@ -1,7 +1,7 @@
 #include<gtk/gtk.h>
 #include<stdlib.h>
 #include "book.h"
-#include "book_algorithm.h"
+#include "algorithm.h"
 
 
 //builers
@@ -113,6 +113,7 @@ void print_book_window(Livre lv){
 
     gtk_widget_show_all(sh_window);
 }
+
 void rechercher_livre(GtkWidget *widget , gpointer data){
     const char *titre=gtk_entry_get_text(GTK_ENTRY(E_search1));
     const char *categorie=gtk_entry_get_text(GTK_ENTRY(E_search2));
@@ -120,11 +121,11 @@ void rechercher_livre(GtkWidget *widget , gpointer data){
 }
 
 int livre_exist(int num){
-    Livre *temp=(Livre *)malloc(sizeof(Livre));
+    Livre temp;
     FILE *pf=fopen("livre.dat","rb");
     if(!pf) exit(-1);
     while (fread(&temp,sizeof(Livre),1,pf)==1){
-        if(temp->num_liv==num) return 1;
+        if(temp.num_liv==num) return 1;
     }
     fclose(pf);
     return 0;
@@ -144,21 +145,10 @@ void save_book(GtkButton *button,gpointer data){
     strcpy(lv.auteur_liv.prenom_aut,gtk_entry_get_text(GTK_ENTRY(E5)));
 
     lv.emprunteur_liv=-1;
-
     // mode ab pour ajouter a la fin du fichier binaire
-    FILE *fin=fopen("livre.dat","ab");
-    if(!fin) {
-        dialog_window("\ncannot open file");
-        exit(-1);
-    }
-    if(!livre_exist(lv.num_liv)){
-        //ecriture
-        fwrite(&lv,sizeof(Livre),1,fin);
-        //num_books++;
-        dialog_window("\necriture reussite !");
-    }else
-        dialog_window("\nlivre deja exist !");
-    fclose(fin);
+ 
+    ajouter_livre_algo(lv);
+    
     gtk_window_close(GTK_WINDOW(i_window));
 }
 
@@ -185,7 +175,7 @@ void print_books(GtkWidget *button , gpointer data){
     p_window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_window_set_title (GTK_WINDOW (p_window), "Liste de livres");
     gtk_container_set_border_width (GTK_CONTAINER (p_window), 10);
-    gtk_widget_set_size_request (p_window, 600, 450);
+    gtk_widget_set_size_request (p_window, 900, 450);
 
     treeview = gtk_tree_view_new ();
     setup_tree_view (treeview);
@@ -268,26 +258,8 @@ void update_book(GtkButton *button,gpointer data){
     strcpy(lv.auteur_liv.prenom_aut,gtk_entry_get_text(GTK_ENTRY(E11)));
     lv.emprunteur_liv=atoi(gtk_entry_get_text(GTK_ENTRY(E12)));
 
-    // mode w+n pour mise a jour
-    FILE *fp=fopen("livre.dat","r+b");
-    Livre temp;
-    int found =0;
-    if(!fp) {
-        dialog_window("\ncannot open file");
-        exit(-1);
-    }
-    while (fread(&temp,sizeof(Livre),1,fp)==1){
-        if(temp.num_liv==lv.num_liv){
-            unsigned long long int dep=-1*sizeof(Livre);
-            fseek(fp,dep,SEEK_CUR);
-            if(fwrite(&lv,sizeof(Livre),1,fp)==1) dialog_window("\nmise a jour reussite !");
-            found=1;
-        }
-    }
+    modifier_livre_algo(lv);
 
-    if(!found)
-        dialog_window("\nlivre non existant !");
-    fclose(fp);
     gtk_window_close(GTK_WINDOW(i_window));
 }
 
@@ -307,7 +279,6 @@ void edit_book (GtkWidget *widget,gpointer data){
         E10=GTK_WIDGET(gtk_builder_get_object (b_builder,"E10"));
         E11=GTK_WIDGET(gtk_builder_get_object (b_builder,"E11"));
         E12=GTK_WIDGET(gtk_builder_get_object (b_builder,"E12"));
-        gtk_entry_set_text (GTK_ENTRY(E8),"blablabla");
 
         save_btn=GTK_WIDGET(gtk_builder_get_object (b_builder,"save_book"));
 
@@ -339,53 +310,10 @@ void delete_book(GtkWidget *widget, gpointer data){
 
 void supprimer_livre(GtkButton *button, gpointer data){
     int num=atoi(gtk_entry_get_text(GTK_ENTRY(E_delete)));
-    FILE *fp=fopen("livre.dat","rb");
-    FILE *fp_temp=fopen("livre_temp.dat","w+b");
-    Livre temp;
-    int found =0;
-    if(!fp || !fp_temp) {
-        dialog_window("\ncannot open files");
-        exit(-1);
-    }
-    while (fread(&temp,sizeof(Livre),1,fp)==1){
-        if(temp.num_liv==num) {found=1;continue;}
-        fwrite(&temp,sizeof(Livre),1,fp_temp);
-    }
-    fclose(fp);
-    fclose(fp_temp);
-    if(found) dialog_window("\nSuppression reussite");
-    else  dialog_window("\nLivre inexistant !");
-    remove("livre.dat");
-    rename("livre_temp.dat","livre.dat");
+    supprimer_livre_algo(num);
     gtk_window_close(GTK_WINDOW(d_window));
 }
 
-void sort_books(GtkButton *button , gpointer data){
-    //Implement Bubble Sort
-    FILE *fp=fopen("livre.dat","r+b");
-    int swapped=1;
-    while (swapped){
-        rewind(fp);
-        swapped=0;
-        Livre temp1,temp2;
-        fread(&temp1,sizeof(Livre),1,fp);
-        fread(&temp2,sizeof(Livre),1,fp);
-        while (!feof(fp)){
-            if(strcmp(temp1.categ_liv,temp2.categ_liv)>0){
-                swapped=1;
-                unsigned long long int dep=-2*sizeof(Livre);
-                fseek(fp,dep,SEEK_CUR);
-                fwrite(&temp2,sizeof(Livre),1,fp);
-                fwrite(&temp1,sizeof(Livre),1,fp);
-            }
-            else{
-                temp1=temp2;
-            }
-            fread(&temp2,sizeof(Livre),1,fp);
-        }
-    }
-    dialog_window("\nBooks Sorted Succefully !");
-}
 
 void search_book(GtkWidget *widget , gpointer data){
     s_builder=gtk_builder_new_from_file("glade/livre.glade");
@@ -416,7 +344,7 @@ void book_window (GtkWidget *widget,gpointer data){
     g_signal_connect(btn_show_books,"clicked",G_CALLBACK(print_books),NULL);
     g_signal_connect(btn_edit_book,"clicked",G_CALLBACK(pre_edit_book),NULL);
     g_signal_connect(btn_delete_book,"clicked",G_CALLBACK(delete_book),NULL);
-    g_signal_connect(btn_sort,"clicked",G_CALLBACK(sort_books),NULL);
+    g_signal_connect(btn_sort,"clicked",G_CALLBACK(ordonner_livre_algo),NULL);
     g_signal_connect(btn_search_book,"clicked",G_CALLBACK(search_book),NULL);
     gtk_widget_show_all(b_window);
 }
