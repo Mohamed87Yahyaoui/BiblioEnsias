@@ -3,8 +3,7 @@
 
 # GTK INSTALLATION PROCESS
 
-
-# Windows installation
+## Windows installation
 
 
 - Download and install msys2 from [https://www.msys2.org/](https://www.msys2.org/) there's an installation guide there 
@@ -25,11 +24,11 @@
   - **C:\msys32\mingw32\bin** (for 32 bit systems)
 - To continue the installation scroll down to how to configure code blocks with gtk
 
-# Linux Installation
+## Linux Installation
 
 run this command **_sudo apt install libgtk-3-dev_** and you're good to go :D (another reason why you should switch to linux )
 
-# How To Configure Codeblocks With gtk
+## How To Configure Codeblocks With gtk
 
 - Create a new project
 - Go to Project > Build options 
