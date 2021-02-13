@@ -70,4 +70,4 @@ run this command **_sudo apt install libgtk-3-dev_** and you're good to go :D (a
   - make
 - Run the application from within the terminal by running the command ./BIBLIOENSIAS
 
-##Credit goes to Oussama Barkouki for this readme. 
+## Credit goes to Oussama Barkouki for this readme. 
